@@ -3,12 +3,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use ApiPlatform\Core\Annotation\ApiResource;
 /**
  * Teacherslanguages
- *
+ * @ApiResource()
  * @ORM\Table(name="teachersLanguages", indexes={@ORM\Index(name="fk_teacherLanguage_idx", columns={"idLanguage"}), @ORM\Index(name="fk_teacherID_idx", columns={"idUser"})})
- * @ORM\Entity(repositoryClass="App\Repository\TeachersLanguagesRepository")
+ * @ORM\Entity
  */
 class Teacherslanguages
 {
@@ -26,7 +26,7 @@ class Teacherslanguages
      *
      * @ORM\Column(name="active", type="boolean", nullable=false)
      */
-    private $active = '0';
+    private $active;
 
     /**
      * @var \Users

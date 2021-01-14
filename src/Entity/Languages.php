@@ -3,12 +3,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use ApiPlatform\Core\Annotation\ApiResource;
 /**
  * Languages
- *
+ * @ApiResource()
  * @ORM\Table(name="languages")
- * @ORM\Entity(repositoryClass="App\Repository\LanguagesRepository")
+ * @ORM\Entity
  */
 class Languages
 {

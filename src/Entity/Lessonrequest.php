@@ -3,12 +3,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use ApiPlatform\Core\Annotation\ApiResource;
 /**
  * Lessonrequest
- *
+ * @ApiResource()
  * @ORM\Table(name="lessonRequest", indexes={@ORM\Index(name="fk_LessonUser_idx", columns={"idUser"}), @ORM\Index(name="fk_LessonLanguage_idx", columns={"idLanguage"})})
- * @ORM\Entity(repositoryClass="App\Repository\LessonrequestRepository")
+ * @ORM\Entity
  */
 class Lessonrequest
 {
@@ -27,6 +27,27 @@ class Lessonrequest
      * @ORM\Column(name="description", type="string", length=1000, nullable=false)
      */
     private $description;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date", type="datetime", nullable=false)
+     */
+    private $date;
+
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="active", type="integer", nullable=true, options={"default"="1"})
+     */
+    private $active = '1';
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=200, nullable=false)
+     */
+    private $title;
 
     /**
      * @var \Languages
@@ -61,6 +82,42 @@ class Lessonrequest
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTimeInterface $date): self
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    public function getActive(): ?int
+    {
+        return $this->active;
+    }
+
+    public function setActive(?int $active): self
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
 
         return $this;
     }

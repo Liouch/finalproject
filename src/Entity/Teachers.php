@@ -3,12 +3,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use ApiPlatform\Core\Annotation\ApiResource;
 /**
  * Teachers
- *
+ * @ApiResource()
  * @ORM\Table(name="teachers", indexes={@ORM\Index(name="fk_TeacherUser_idx", columns={"idUser"})})
- * @ORM\Entity(repositoryClass="App\Repository\TeachersRepository")
+ * @ORM\Entity
  */
 class Teachers
 {
@@ -43,11 +43,25 @@ class Teachers
     private $rating = 'NULL';
 
     /**
-     * @var string
+     * @var string|null
      *
-     * @ORM\Column(name="profilePic", type="string", length=450, nullable=false)
+     * @ORM\Column(name="profilePic", type="string", length=450, nullable=true, options={"default"="NULL"})
      */
-    private $profilepic;
+    private $profilepic = 'NULL';
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="signUpDate", type="datetime", nullable=false)
+     */
+    private $signupdate;
+
+    /**
+     * @var bool|null
+     *
+     * @ORM\Column(name="active", type="boolean", nullable=true, options={"default"="1"})
+     */
+    private $active = true;
 
     /**
      * @var \Users
@@ -105,9 +119,33 @@ class Teachers
         return $this->profilepic;
     }
 
-    public function setProfilepic(string $profilepic): self
+    public function setProfilepic(?string $profilepic): self
     {
         $this->profilepic = $profilepic;
+
+        return $this;
+    }
+
+    public function getSignupdate(): ?\DateTimeInterface
+    {
+        return $this->signupdate;
+    }
+
+    public function setSignupdate(\DateTimeInterface $signupdate): self
+    {
+        $this->signupdate = $signupdate;
+
+        return $this;
+    }
+
+    public function getActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(?bool $active): self
+    {
+        $this->active = $active;
 
         return $this;
     }
