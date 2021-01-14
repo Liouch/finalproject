@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+{{ dump(app.user)}}
+{{ dump(app.request)}}
+{{ dump(app.session)}}
+{% endblock %}

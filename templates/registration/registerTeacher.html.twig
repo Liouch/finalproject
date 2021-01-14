@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Become a teacher{% endblock %}
+
+{% block body %}
+    {% for flashError in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+    {% endfor %}
+    <div class="row">
+        <div class="col-12 d-flex justify-content-center">
+            <h1>Become a teacher</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-12 d-flex justify-content-center">
+                     
+                {% if (app.user == false) %}
+                {{ form_start(registrationForm, {'multipart': true}) }}
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" name="name" id="name" placeholder="Name" required>
+                    </div>
+                    <div class="form-group">
+                    {{ form_row(registrationForm.email) }}
+                    </div>
+                    <div class="form-group">
+                    {{ form_row(registrationForm.plainPassword, {
+                        label: 'Password'
+                    }) }}
+                    </div>
+                    {{teachersData|raw}}
+                    <div class="class-form">
+                            {{ form_row(registrationForm.agreeTerms) }}
+                    </div>                    
+                    <div class="form-group">
+                        <button class="btn btn-primary" type="submit">Sign Up</button>
+                    </div>
+                    {{ form_end(registrationForm) }}
+
+                {% elseif app.user == true %}
+                    <form action="http://finalproject.test/register/teacher" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="formUserToTeacher">
+                    {{teachersData|raw}}
+                    <div class="class-form">
+                            {{ form_row(registrationForm.agreeTerms) }}
+                    </div>
+                    
+                    
+                    <div class="form-group">
+                        <button class="btn btn-primary" type="submit">Sign Up</button>
+                    </div>
+                    <input type="hidden" name="id" value="{{app.user.id}}">
+                    </form>
+                        
+                    
+                {% endif %}
+                
+               
+            
+        
+        </div>
+    </div>
+    
+    
+{% endblock %}
+{% block javascripts %}
+<script src="/js/registration.js"></script>
+{% endblock %}

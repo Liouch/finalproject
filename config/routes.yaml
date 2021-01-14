@@ -1,0 +1,31 @@
+index:
+    path: /
+    controller: App\Controller\HomeController::index
+
+signUpUser:
+    path: /register/user
+    controller: App\Controller\RegistrationController::UserRegister
+
+signUpTeacher:
+    path: /register/teacher
+    controller: App\Controller\RegistrationController::TeacherRegister
+
+EditTeacher:
+    path: /profile/teacher/update
+    controller: App\Controller\RegistrationController::TeacherRegister
+
+EditUser:
+    path: /profile/user/update
+    controller: App\Controller\RegistrationController::UserRegister
+
+profileUser:
+    path: /profile/user
+    controller: App\Controller\UserController::UserProfile
+
+profileTeacher:
+    path: /profile/teacher
+    controller: App\Controller\UserController::TeacherProfile
+
+AlLessonRequest:
+    path: /lessonrequest/
+    controller: App\Controller\LessonRequestController::index
