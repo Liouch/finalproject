@@ -10,8 +10,11 @@ function InitializeRegistration(){
 function EventsLessonRequest(){
     $("#btn-nuevo-lesson-request").on("click", function(){
         ShowNewLessonRequest();
-        
     })
+    $("#lessonRequestList").on("click", "button[class*='btn-edit']", function(){
+        ShowEditLessonRequest(this);
+    })
+   
 }
 
 var objLessonRequests;
@@ -35,16 +38,24 @@ function CallbackLanguages(result){
     console.log(objLanguages);
 }
 function LoadLessonRequests(){
-    var obj = { page: 1};
-    GetLessonRequests(obj);
+    GetLessonRequests()
 }
-function GetLessonRequests(objData){
-    var obj = {
-        url: "http://localhost:8000/api/lessonrequests",
-        data: objData,
-        functionName: CallbackLessonRequests
-    }
-    AjaxGetAll(obj, null)
+
+function GetLessonRequests(){
+    var url = "http://finalproject.test/lessonrequestsUser";
+    $.ajax({
+        method: "GET",
+        url: url,
+        dataType: 'json',
+        error: function(){
+            console.log("something went wrong");
+        }
+    })
+    .done(function(result){
+        console.log(result);
+        CallbackLessonRequests(result);
+    })
+    
 }
 function CallbackLessonRequests(result){
     printLessonRequests(result);
@@ -53,18 +64,19 @@ function CallbackLessonRequests(result){
 }
 
 function printLessonRequests(lessonRequests){
-    var lessons = lessonRequests["hydra:member"];
+    //var lessons = lessonRequests["hydra:member"];
     var lessonRequestList = $('#lessonRequestList');
     lessonRequestList.html('');
-    $(lessons).each(function(index){
+    $(lessonRequests).each(function(index){
         var nameLanguage = GetNameLanguage(this.idlanguage);
         var idLanguage = GetIdLanguageApi(this.idlanguage);
         var html = `<div class="row pb-2 pt-2">
-        <div class="col-5" id="title_${this.id}">${this.description}</div>
+        <div class="col-3" id="title_${this.id}">${this.title}</div>
+        <div class="col-3" id="description_${this.id}">${this.description}</div>
         <div class="col-2" id="language_${this.id}">${nameLanguage}</div>
         <div class="col-2" id="date_${this.date}">${this.date}</div>
         <div class="col-1">
-            <button type="button" class="btn btn-primary" id="edit_${this.id}" idLanguage="${idLanguage}">Edit</button> 
+            <button type="button" class="btn btn-primary btn-edit" id="${this.id}" idLanguage="${idLanguage}">Edit</button> 
         </div>
         <div class="col-1">
             <button type="button" class="btn btn-secondary" id="delete_${this.id}">Delete</button>
@@ -73,7 +85,7 @@ function printLessonRequests(lessonRequests){
     lessonRequestList.append(html);
     });
     
-    console.log(lessons);
+    console.log(lessonRequests);
 
 }   
 
@@ -94,6 +106,32 @@ function ShowNewLessonRequest(){
     
     var click = `"NewLessonRequest('${idTitle}', '${idDescription}', '${idLanguage}')"`;
     var value = "Confirm";
+    ModalWindow(body, click, value);
+}
+function ShowEditLessonRequest(obj){
+    var button=$(obj);
+    var id = button.attr('id');
+    var idLang = button.attr('idLanguage');
+
+    var title = $("#title_" + id).html();
+    var description = $("#description_" + id).html();
+    
+
+
+    var idTitle = "txtLessonRequestTitle";
+    var idDescription = "txtLessonRequestDescription";
+    var idLanguage = "cbLanguage";
+    var body = 
+            `<label>Title</label><br>
+            <input type="text" id="${idTitle}" value="${title}" required></input><br>
+            <label>Description</label><br>
+            <input type="text" id="${idDescription}" value="${description}" required></input><br>
+            <label>Language</label><br>
+           ${CreateLanguageCombo(idLanguage, idLang)}<br>
+           `;
+    var click = `"EditLessonRequest('${idTitle}', '${idDescription}', '${idLanguage}', '${id}')"`;
+
+    var value = "Update";
     ModalWindow(body, click, value);
 }
 
@@ -155,6 +193,29 @@ function NewLessonRequest(idTitle, idDescription, idLanguage){
 function CallbackSaveLessonRequest(result){
     //HideDivBlock();
     alert("Lesson request sent");
+    LoadLessonRequests();
+}
+
+function EditLessonRequest(idTitle, idDescription, idLanguage, id){
+    var title = $("#"+idTitle).val();
+    var description = $("#"+idDescription).val();
+    var language = $("#"+idLanguage).val();
+
+    var objItem = {
+        title: title,
+        description: description,
+        idlanguage: "api/languages/"+language,
+    }
+    var obj = {
+        url: "http://localhost:8000/api/lessonrequests",
+        data: objItem,
+        functionName: CallbackEditLessonRequest,
+    }
+    AjaxPutItem(id, obj);
+}
+
+function CallbackEditLessonRequest(result){
+    alert("Lesson request edited");
     LoadLessonRequests();
 }
 
