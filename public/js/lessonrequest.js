@@ -14,6 +14,9 @@ function EventsLessonRequest(){
     $("#lessonRequestList").on("click", "button[class*='btn-edit']", function(){
         ShowEditLessonRequest(this);
     })
+    $("#lessonRequestList").on("click", "button[class*='btn-delete']", function(){
+        ShowDeleteLessonRequest(this);
+    })
    
 }
 
@@ -79,7 +82,7 @@ function printLessonRequests(lessonRequests){
             <button type="button" class="btn btn-primary btn-edit" id="${this.id}" idLanguage="${idLanguage}">Edit</button> 
         </div>
         <div class="col-1">
-            <button type="button" class="btn btn-secondary" id="delete_${this.id}">Delete</button>
+            <button type="button" class="btn btn-secondary btn-delete" id="${this.id}">Delete</button>
         </div>
         </div>`;
     lessonRequestList.append(html);
@@ -116,8 +119,6 @@ function ShowEditLessonRequest(obj){
     var title = $("#title_" + id).html();
     var description = $("#description_" + id).html();
     
-
-
     var idTitle = "txtLessonRequestTitle";
     var idDescription = "txtLessonRequestDescription";
     var idLanguage = "cbLanguage";
@@ -133,6 +134,17 @@ function ShowEditLessonRequest(obj){
 
     var value = "Update";
     ModalWindow(body, click, value);
+}
+
+function ShowDeleteLessonRequest(obj){
+    var button = $(obj);
+    var id = button.attr('id');
+
+    var body = `<p>Are you sure you want to delete this lesson request?</p>`;
+    var click = `"DeleteLessonRequest(${id})"`;
+    
+    var value ="Delete";
+    ModalWindow(body,click,value);
 }
 
 function ModalWindow(body, click, value){
@@ -182,7 +194,7 @@ function NewLessonRequest(idTitle, idDescription, idLanguage){
     }
 
     var obj = {
-        url: "http://localhost:8000/api/lessonrequests",
+        url: "http://finalproject.test/api/lessonrequests",
         data: objItem,
         functionName: CallbackSaveLessonRequest
     }
@@ -217,8 +229,26 @@ function EditLessonRequest(idTitle, idDescription, idLanguage, id){
 function CallbackEditLessonRequest(result){
     alert("Lesson request edited");
     LoadLessonRequests();
+    
+}
+function DeleteLessonRequest(id){
+    //var html = "Deleting lesson request";
+    //showDivblock(html);
+     var obj = {
+        url: "http://localhost:8000/api/lessonrequests",
+        data: {active: 0},
+        functionName: CallbackDeleteLessonRequest,
+    }
+    AjaxPutItem(id, obj);
+
 }
 
+function CallbackDeleteLessonRequest(result){
+    var id = result.id;
+    $("#"+id).closest("div[class*='row']").remove();
+    console.log(result.id);
+    
+}
 function GetNameLanguage(language){
     var returnValue = "";
     $(objLanguages).each(function(index){
