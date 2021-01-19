@@ -38,6 +38,6 @@ AlLessonRequest:
     path: /lessonrequests/all
     controller: App\Controller\LessonRequestController::getAllLessonsRequests
 
-Messages:
+AllMessages:
     path: /messages/all
     controller: App\Controller\MessageController::showConversations

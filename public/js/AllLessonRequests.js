@@ -59,20 +59,7 @@ function printLessonRequests(lessonRequests){
         var idLanguage = GetIdApi(this.idlanguage);
         var idUser = GetIdApi(this.iduser);
         
-        var html1 = `<div class="row pb-2 pt-2">
-        <div class="col-3" id="title_${this.id}">${this.title}</div>
-        <div class="col-3" id="description_${this.id}">${this.description}</div>
-        <div class="col-2" id="language_${this.id}">${nameLanguage}</div>
-        <div class="col-2" id="date_${this.date}">${this.date}</div>
-        <div class="col-1">
-            <button type="button" class="btn btn-primary btn-edit" id="${this.id}" idLanguage="${idLanguage}">Edit</button> 
-        </div>
-        <div class="col-1">
-            <button type="button" class="btn btn-secondary btn-delete" id="${this.id}">Delete</button>
-        </div>
-        </div>`;
         var html = `
-        
                 <div class="card mt-2">
                     <div class="card-header" id="title_${this.id}">${this.title} - ${nameLanguage}</div>
                     <div class="card-body">
@@ -81,8 +68,6 @@ function printLessonRequests(lessonRequests){
                             <button type="button" class="btn btn-primary btn-send" id="${this.id}" idUser="${idUser}">Send Message</button>
                         </div>
                     </div>
-                    
-                    
                 </div>`
     lessonRequestList.append(html);
     });
