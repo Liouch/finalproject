@@ -45,7 +45,7 @@ function LoadLessonRequests(){
 }
 
 function GetLessonRequests(){
-    var url = "http://finalproject.test/lessonrequestsUser";
+    var url = "http://finalproject.test/lessonrequests/user";
     $.ajax({
         method: "GET",
         url: url,
@@ -87,8 +87,9 @@ function printLessonRequests(lessonRequests){
         </div>`;
     lessonRequestList.append(html);
     });
+    //CreatePaginator(lessonRequests)
     
-    console.log(lessonRequests);
+   
 
 }   
 
@@ -180,7 +181,6 @@ function NewLessonRequest(idTitle, idDescription, idLanguage){
     var description = $("#"+idDescription).val();
     var language = $("#"+idLanguage).val();
     var User = $("#idUser").val();
-    var date = CurrentDateISO();
     var html = "Creating lesson request";
 
     //ShowDivBlock(html)
@@ -251,6 +251,7 @@ function CallbackDeleteLessonRequest(result){
 }
 function GetNameLanguage(language){
     var returnValue = "";
+    console.log(objLanguages);
     $(objLanguages).each(function(index){
         var id = this.id;
         var idApi = GetIdLanguageApi(language);

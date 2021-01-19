@@ -11,22 +11,22 @@ use Symfony\Component\Routing\Annotation\Route;
 class LessonRequestController extends AbstractController
 {
     
-    public function index(): Response
+    public function UserLessonsRequests(): Response
     {   
         $user = $this->getUser();
         if(isset($user) && !empty($user)){
 
-            return $this->render('Lessonrequest/index.html.twig', [
+            return $this->render('Lessonrequest/addEdit.html.twig', [
                 'user' => $user,
             ]);
         }
 
-        return $this->render('Lessonrequest/index.html.twig', [
+        return $this->render('Lessonrequest/addEdit.html.twig', [
             'controller_name' => 'LessonRequestController',
         ]);
     }
 
-    public function getLessonsRequests(){
+    public function getUserLessonsRequests(){
         $user = $this->getUser();
 
         $listLessonRequests = $this->getDoctrine()->getRepository(Lessonrequest::class)->findBy(['iduser' => $user, 'active' => '1']);
@@ -35,4 +35,16 @@ class LessonRequestController extends AbstractController
        
         return $response;
     }
+    public function getAllLessonsRequests(){
+        
+        /* $listLessonRequests = $this->getDoctrine()->getRepository(Lessonrequest::class)->findBy(['active' => '1']);
+        $listLessonRequests = $this->get('serializer')->serialize($listLessonRequests, 'json');
+        $response = new Response($listLessonRequests); */
+        $user = $this->getUser();
+       
+        return $this->render('Lessonrequest/showAll.html.twig', [
+            'user' => $user,
+        ]);
+    }
+    
 }

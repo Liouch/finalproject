@@ -28,8 +28,16 @@ profileTeacher:
 
 AlLessonRequestOwnedByUser:
     path: /lessonrequest/
-    controller: App\Controller\LessonRequestController::index
+    controller: App\Controller\LessonRequestController::UserLessonsRequests
 
 AlLessonRequestOwnedByUser1:
-    path: /lessonrequestsUser/
-    controller: App\Controller\LessonRequestController::getLessonsRequests
+    path: /lessonrequests/user/
+    controller: App\Controller\LessonRequestController::getUserLessonsRequests
+
+AlLessonRequest:
+    path: /lessonrequests/all
+    controller: App\Controller\LessonRequestController::getAllLessonsRequests
+
+Messages:
+    path: /messages/all
+    controller: App\Controller\MessageController::showConversations

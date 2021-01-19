@@ -36,11 +36,11 @@ class Messages
     private $messagedate;
 
     /**
-     * @var bool
+     * @var bool|null
      *
-     * @ORM\Column(name="read", type="boolean", nullable=false)
+     * @ORM\Column(name="MessageRead", type="boolean", nullable=true)
      */
-    private $read = '0';
+    private $messageread = '0';
 
     /**
      * @var \Users
@@ -91,14 +91,14 @@ class Messages
         return $this;
     }
 
-    public function getRead(): ?bool
+    public function getMessageRead(): ?bool
     {
-        return $this->read;
+        return $this->messageread;
     }
 
-    public function setRead(bool $read): self
+    public function setMessageRead(?bool $messageread): self
     {
-        $this->read = $read;
+        $this->messageread = $messageread;
 
         return $this;
     }

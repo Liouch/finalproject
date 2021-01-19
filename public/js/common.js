@@ -14,4 +14,3 @@ function ConvertMonthDay(value, uno=0){
     };
     return value;
 }
-

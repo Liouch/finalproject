@@ -5,11 +5,11 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
-
+use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * Users
- *
+ * @ApiResource()
  * @ORM\Table(name="users", indexes={@ORM\Index(name="fk_UserRole_idx", columns={"idRole"})})
  * @ORM\Entity(repositoryClass="App\Repository\UsersRepository")
  * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
@@ -192,6 +192,5 @@ class Users implements UserInterface, \Serializable
 
         ) = unserialize($serialized, array('allowed_clases' => false));
     }
-
-    
+       
 }
