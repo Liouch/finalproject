@@ -47,4 +47,44 @@ class MessagesRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function getConversationUser($id1, $id2){
+        $conn = $this->getEntityManager()->getConnection();
+        $query = "SELECT m.* FROM (
+            SELECT * FROM messages WHERE iduser=$id1 or idteacher=$id1) m
+            WHERE iduser=$id2 or idteacher =$id2";
+        $stmt = $conn->prepare($query);
+        $stmt->execute();
+
+        return $stmt->fetchAllAssociative();
+    }
+    /* public function getConversationUser($id1, $id2):array{
+        $subqb = $this->createQueryBuilder('m')
+                ->andWhere ('m.iduser = :val1')
+                ->orWhere ('m.idteacher = :val1');
+        
+        $subquery = $subqb->getQuery();
+
+        $qb = $this->createQueryBuilder1()
+                ->select('a')
+                ->from(($subquery), 'a')
+                ->andWhere('a.iduser = :val2')
+                ->orWhere ('a.idteacher = :val2')
+                ->setParameter('val1', $id1)
+                ->setParameter('val2', $id2);
+            
+        $query = $qb->getQuery();
+        $qb->getDQL();
+        $query = $qb->getQuery();
+        return $query->execute();
+
+    } */
+    public function getAllMessagesUser($value):array{
+        $qb = $this->createQueryBuilder('m')
+                    ->andWhere ('m.iduser = :val')
+                    ->orWhere ('m.idteacher = :val')
+                    ->setParameter('val', $value)
+                    ;
+        $query = $qb->getQuery();
+        return $query->execute();
+    }
 }

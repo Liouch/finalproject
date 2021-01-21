@@ -8,7 +8,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
  * Messages
  * @ApiResource()
  * @ORM\Table(name="messages", indexes={@ORM\Index(name="fk_MessageUser_idx", columns={"idUser"}), @ORM\Index(name="fk_MessageTeacher_idx", columns={"idTeacher"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\MessagesRepository")
  */
 class Messages
 {

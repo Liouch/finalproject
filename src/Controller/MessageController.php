@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class MessageController extends AbstractController
 {
     
-    public function showConversations(): Response
+    public function showAllConversations(): Response
     {
         $user = $this->getUser();
         $userId = "";
@@ -19,12 +19,13 @@ class MessageController extends AbstractController
         }else{
             $userId = "iduser";
         }
-        $userMessages = $this->getDoctrine()->getRepository(Messages::class)->findBy([$userId => $user->getId()]);
-        $count = count($userMessages);
+        $userMessages = $this->getDoctrine()->getRepository(Messages::class)->getAllMessagesUser($user->getId());
+
         for ($i=0; $i<count($userMessages); $i++){
-            for ($j=$i+1; $j<count($userMessages); $j++){
+            for ($j=$i+1; $j<=count($userMessages); $j++){
                 if ($userMessages[$i]->getIdUser()->getId() == $userMessages[$j]->getIdUser()->getId()){
                     unset($userMessages[$i]);
+                    break;
                 };
             }
         }
@@ -35,4 +36,42 @@ class MessageController extends AbstractController
             
         ]);
     }
+    public function showConversation($id1, $id2){
+        $user = $this->getUser();
+        if (isset($user) && !empty($user)){
+            if ($user->getId() == $id1){
+                $error = false;
+                
+                return $this->render('message/singleconversation.html.twig', [
+                    'controller_name' => 'MessageController',
+                    'user' => $user,
+                    'id1' => $id1,
+                    'id2' => $id2,
+                    'error' => $error,
+                ]);
+            }else{
+                $error = "You don't have access";
+                return $this->render('message/singleconversation.html.twig', [
+                    'controller_name' => 'MessageController',
+                    'error' => $error,
+                    
+                ]);
+            }
+        }
+    }
+    public function getMessages($id1, $id2){
+        $user = $this->getUser();
+        if (isset($user) && !empty($user)){
+            if ($user->getId() == $id1){
+                $messages = $this->getDoctrine()->getRepository(messages::class)->getConversationUser($id1, $id2);
+                $messages = $this->get('serializer')->serialize($messages, 'json');
+                $response = new Response($messages);
+       
+                return $response;
+            }else{
+                return "You don't have access";
+            }
+        }
+    }
+    
 }

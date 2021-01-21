@@ -2,24 +2,45 @@
 
 {% block title %}Hello HomeController!{% endblock %}
 
+{% block stylesheets %}
+<link rel="stylesheet" href="/css/messages.css">
+{% endblock %}
+
 {% block body %}
 Message controller
 {{dump(user)}}
 {{dump(userMessages)}}
 <div class="row p-5 justify-content-center">
-    <div class="col-6">
+    <div class="col-6" id="messagesList">
+    
+    {% if userMessages|length > 0 %}
         {% for messages in userMessages %}
-            <div class="card mt-2 ">
-                <div class="card-header" id="title_${this.id}">{{messages.iduser.name}}</div>
+            {% set idUserVar = "" %}
+            {% if user.id == messages.iduser.id %}
+                {% set idUserVar = messages.idteacher.id %}
+            {% else %}
+                {% set idUserVar = messages.iduser.id %}
+            {% endif %}
+            <div class="card mt-2 card-message" idLoggedUser={{user.id}} idUser={{idUserVar}}>
+                <div class="card-header">{{messages.iduser.name}}</div>
                 <div class="card-body">
                     <p class="card-text">{{messages.message}}</p>
                 </div>
             </div>
 
         {% endfor %}
-               
+    {% else %} 
+        <div class="card mt-2">
+            <div class="card-body">
+                <p class="card-text">You don't have messages yet</p>
+            </div>
+        </div>
+    {% endif %}
         
         
     </div>
 </div>
+{% endblock %}
+{% block javascripts %}
+<script src="/js/messagesAll.js"></script>
 {% endblock %}

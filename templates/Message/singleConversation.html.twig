@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="/css/messages.css">
+{% endblock %}
+
+{% block body %}
+Message controller
+<div class="row p-5 justify-content-center">
+    {% if (error == false)  %}
+        <div class="col-4" id="messagesList" idloggeduser="{{user.id}}" idUser="{{id2}}">
+        </div>
+        {% else %}
+        <div class="col-4">
+            <p>{{error}}</p>
+        </div>
+        {% endif %}
+        {# <button type="button" class="btn btn-primary">Go back to Messages</button> #}
+</div>
+{% endblock %}
+{% block javascripts %}
+<script src="/js/messagesDirect.js"></script>
+{% endblock %}

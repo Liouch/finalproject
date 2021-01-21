@@ -40,4 +40,13 @@ AlLessonRequest:
 
 AllMessages:
     path: /messages/all
-    controller: App\Controller\MessageController::showConversations
+    controller: App\Controller\MessageController::showAllConversations
+
+GetConversationMessages:
+    path: /messages/get/{id1}/{id2}
+    controller: App\Controller\MessageController::getMessages
+
+ShowConversation:
+    path: /messages/{id1}/{id2}
+    controller: App\Controller\MessageController::showConversation
+
