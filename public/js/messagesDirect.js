@@ -8,19 +8,28 @@ function InitializeMessagesDirect(){
 }
 
 function EventsMessagesDirect(){
-    $("#messagesList").on("click", "button[class*='btn-send']", function(){
+    /* $("#SendMessage").on("click", "button[class*='btn-send']", function(){
         SendMessageDirect(this);
+    }) */
+    // New way to do it, you send the form and recollect the value from the input/select/textarea
+    $("#messageTextForm").on("submit", function(e){
+        e.preventDefault();
+        SendMessageDirect(e.target);
+        
     })
 }
-function LoadMessages(){
+function LoadMessages(){  
     GetMessages();
+    printSendMessage();
 }
 
 function SendMessageDirect(obj){
-    var button=$(obj);
-    var idLoggedUser = button.attr('idloggeduser');
-    var idTeacher = button.attr('iduser');
-    var message = $("#message").val();
+    const idLoggedUser = $("#messagesList")[0].dataset.idloggeduser;
+    const idTeacher = $("#messagesList")[0].dataset.iduser;
+
+    var formData = new FormData(obj);
+    var message = formData.get('message');
+   
     var html = "Sending message";
     //ShowDivBlock(html)
     var objItem = {
@@ -40,16 +49,20 @@ function SendMessageDirect(obj){
 
 }
 function CallbackSaveMessage(result){
-    //HideDivBlock();
-    //LoadLessonRequests();
-    LoadMessages();
+    //HideDivBlock();    
+    GetMessages();
+    $("#message").val(''); 
+    
 }
 
 
 function GetMessages(){
-    var id1 = $("#messagesList").attr("idloggeduser");
-    var id2 = $("#messagesList").attr("iduser");
-    var url = "http://finalproject.test/messages/get/" + id1 + "/" +id2;
+    //var idLoggedUser = $("#messagesList").attr("idloggeduser");
+    //var conversationIdUser = $("#messagesList").attr("iduser");
+    const idLoggedUser = $("#messagesList")[0].dataset.idloggeduser;
+    const idTeacher = $("#messagesList")[0].dataset.iduser;
+
+    var url = "http://finalproject.test/messages/get/"+idTeacher;
     console.log(url);
     $.ajax({
         method: "GET",
@@ -60,23 +73,21 @@ function GetMessages(){
         }
     })
     .done(function(result){
-        var messagesList = $('#messagesList');
-        CallbackGetMessages(result, id1, id2, messagesList);
+        CallbackGetMessages(idLoggedUser, result);
         setTimeout(GetMessages, 10000);
-        printSendMessage(id1, id2, messagesList);
     })
     
 }
-function CallbackGetMessages(result, id1, messagesList){
-    printMessages(result, id1, id2, messagesList);
+function CallbackGetMessages(idLoggedUser, result){
+    printMessages(idLoggedUser, result);
     //HideDivBloc()
 }
 
-function printMessages(messages, id1, messagesList){
-    console.log(messages);
+function printMessages(idLoggedUser, messages){
+    var messagesList = $('#messagesList');
     messagesList.html('');
     $(messages).each(function(index){
-        if (this.idUser == id1){
+        if (this.idUser == idLoggedUser){
             var align = "text-right";
         }else{
             var align = "text-left";
@@ -90,15 +101,21 @@ function printMessages(messages, id1, messagesList){
 
     });
 }
-function printSendMessage(id1, id2, messagesList){
+function printSendMessage(){
+    //var idLoggedUser = $("#messagesList").attr("data-idloggeduser");
+    //var conversationIdUser = $("#messagesList").attr("data-iduser");
+    var SendMessage = $("#SendMessage");
     var html = `
+    <form id="messageTextForm">
     <div class="row">
     <div class="col-10">
-        <textarea class="form-control" id="message" row="1"></textarea>
+        <textarea class="form-control" id="message" row="1" name="message" required></textarea>
     </div>
     <div class"=col-2">
-        <button type="button" class="btn btn-primary btn-send" id="btn-send" idloggeduser="${id1}" iduser="${id2}">Send</button>
-    </div></div>`;
-    messagesList.append(html);
+        <button type="submit" class="btn btn-primary btn-send" id="btn-send"">Send</button>
+    </div>
+    </div>
+    <form>`;
+    SendMessage.append(html);
    
 }

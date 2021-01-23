@@ -13,8 +13,7 @@ function EventsMessages(){
 }
 
 function OpenConversation(obj){
-    var id1 = $(obj).attr('idloggeduser');
-    var id2 = $(obj).attr('iduser');
-    var url = "http://finalproject.test/messages/" + id1 + "/" + id2;
+    var idConversationUser = $(obj).attr('iduser');
+    var url = "http://finalproject.test/messages/" + idConversationUser;
     window.location.href = url;
 }

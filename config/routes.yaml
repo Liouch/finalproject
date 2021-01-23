@@ -43,10 +43,10 @@ AllMessages:
     controller: App\Controller\MessageController::showAllConversations
 
 GetConversationMessages:
-    path: /messages/get/{id1}/{id2}
+    path: /messages/get/{id}/
     controller: App\Controller\MessageController::getMessages
 
 ShowConversation:
-    path: /messages/{id1}/{id2}
+    path: /messages/{id}
     controller: App\Controller\MessageController::showConversation
 

@@ -8,10 +8,15 @@
 
 {% block body %}
 Message controller
+
 <div class="row p-5 justify-content-center">
     {% if (error == false)  %}
-        <div class="col-4" id="messagesList" idloggeduser="{{user.id}}" idUser="{{id2}}">
-        </div>
+       
+        <div class="col-4" id="messagesList" data-idLoggedUser="{{user.id}}" data-idUser="{{idUserConversation}}"></div>
+</div>
+<div class="row justify-content-center">
+        <div class="col-4 align-self-center" id="SendMessage"></div>
+
         {% else %}
         <div class="col-4">
             <p>{{error}}</p>
