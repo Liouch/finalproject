@@ -25,6 +25,8 @@ function LoadMessages(){
 
 function SendMessageDirect(obj){
     const idLoggedUser = $("#messagesList")[0].dataset.idloggeduser;
+    const idLoggedUser1 = $("#messagesList").data.idloggeduser;
+    console.log(idLoggedUser1);
     const idTeacher = $("#messagesList")[0].dataset.iduser;
 
     var formData = new FormData(obj);

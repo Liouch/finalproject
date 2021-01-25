@@ -1,15 +1,13 @@
 {% block header %}
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="{{ path('index') }}">Linwah</a>
+  <a class="navbar-brand" href="{{ path('index') }}"><img src="/img/logo/Linwah.png" height="45"/></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-      </li>
+      
       <li class="nav-item">
         <a class="nav-link" href="{{path('AlLessonRequest')}}">Ads</a>
       </li>
@@ -38,11 +36,11 @@
             <a class="dropdown-item" href="/usuario">Perfil</a>
             <a class="dropdown-item" href="/admin">Check Ads</a> 
         {% elseif userRole == 2 %}
-            <a class="dropdown-item" href="/usuario">prueba 2</a>
-            <a class="dropdown-item" href="/admin">Mantenimiento</a>
+            <a class="dropdown-item" href="{{ path('profileUser')}}">Perfil</a>
+            {# <a class="dropdown-item" href="/admin">Mantenimiento</a> #}
         {% elseif userRole == 3 %}
-            <a class="dropdown-item" href="/usuario">prueba 3</a>
-            <a class="dropdown-item" href="/admin">Mantenimiento</a>
+            <a class="dropdown-item" href="{{ path('profileTeacher')}}">Perfil</a>
+            {# <a class="dropdown-item" href="/admin">Mantenimiento</a> #}
         {% endif %}
           <a class="dropdown-item" href="/logout">Logout</a>
           {% if is_granted('ROLE_USER') %}

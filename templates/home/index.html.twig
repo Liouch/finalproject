@@ -3,6 +3,17 @@
 {% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
-<div class="row" id="newTeachers">
+<div class="row justify-content-center">
+    <div class="col-6 justify-content-center">
+        <h1>New teachers</h1>
+    </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-6" id="top5NewTeachersList">
+        </div>
+    </div>
 </div>
+{% endblock %}
+{% block javascripts %}
+<script src="/js/home.js"></script>
 {% endblock %}

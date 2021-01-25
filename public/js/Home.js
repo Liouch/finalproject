@@ -1,75 +1,92 @@
 $(document).ready(function(){
-    InitializeRegistration();
+    InitializeHome();
 });
 
-function InitializeRegistration(){
+function InitializeHome(){
     EventsLessonRequest();
-    LoadLanguages();
+    LoadTop5NewTeachers();
 }
 
 function EventsLessonRequest(){
-    $("#lessonRequestList").on("click", "button[class*='btn-send']", function(){
+    /* $("#lessonRequestList").on("click", "button[class*='btn-send']", function(){
         ShowSendMessageModal(this);
-    })
+    }) */
 }
 
-var objLessonRequests;
 
-function LoadLanguages(){
-    var obj = { page: 1}
-    getLanguages(obj);
+
+function LoadTop5NewTeachers(){
+    var obj = { 
+        page: 1,
+        'order%5Bsignupdate%5D': "desc",
+        itemsPerPage: 5}
+    getTop5NewTeachers(obj);
 }
 
-function getLanguages(objData){
+function getTop5NewTeachers(objData){
     var obj = {
-        url: "http://localhost:8000/api/languages",
+        url: "http://finalproject.test/api/teachers?order%5Bsignupdate%5D=desc",
         data: objData,
         functionName: CallbackLanguages
     }
     AjaxGetAll(obj)
 }
 function CallbackLanguages(result){
-    objLanguages = result;
-    LoadLessonRequests()
+   console.log(result);
+    printLessonRequests(result)
+
 }
 
-function LoadLessonRequests(){
-    var obj = {
-        url: "http://localhost:8000/api/lessonrequests",
-        data: { page: 1},
-        functionName: CallbackGetAllLessons
-    }
-    AjaxGetAll(obj)
-}
-
-function CallbackGetAllLessons(result){
-    objLessonRequests = result;
-    console.log(objLessonRequests);
-    printLessonRequests(objLessonRequests)
-    
-}
-
-function printLessonRequests(lessonRequests){
+function printLessonRequests(teachers){
     //var lessons = lessonRequests["hydra:member"];
-    var lessonRequestList = $('#lessonRequestList');
-    lessonRequestList.html('');
-    $(lessonRequests).each(function(index){
+    var top5NewTeachersList = $('#top5NewTeachersList');
+    top5NewTeachersList.html('');
+    var html = `<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner" id="carouselTeacherCards">
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>`;
+    top5NewTeachersList.append(html);
+    $(teachers).each(function(index){
         
-        var nameLanguage = GetNameLanguage(this.idlanguage);
-        var idLanguage = GetIdApi(this.idlanguage);
-        var idUser = GetIdApi(this.iduser);
-        
-        var html = `
-                <div class="card mt-2">
-                    <div class="card-header" id="title_${this.id}">${this.title} - ${nameLanguage}</div>
-                    <div class="card-body">
-                        <p class="card-text">${this.description}</p>
-                        <div class="text-right">
-                            <button type="button" class="btn btn-primary btn-send" id="${this.id}" idUser="${idUser}">Send Message</button>
+        var title = this.title;
+        var description = this.description;
+        var profilePic = this.profilepic;
+        var idTeacher = GetIdApi(this.iduser);
+        var profilePicUrl = "/img/teacher/" + idTeacher + "/" + profilePic;
+        var rating = this.rating;
+        var active = "";
+        if (index == 0){
+            var active = "active";
+        }
+        var htmlCarousel = `
+            <div class="carousel-item ${active}">
+                <div class="card">
+                    <div class="row">
+                        <div class="col-auto">
+                            <img src="${profilePicUrl}" class="img-fluid" alt="${profilePicUrl}" width="200" height="200">
+                        </div>
+                        <div class="col">
+                            <div class="card-body">
+                                <h5 class="card-title">${title}</h5>
+                                <p class="card-text">${description}</p>
+                                <div class="text-right">
+                                    <a href="#" class="btn btn-primary">Send message</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>`
-    lessonRequestList.append(html);
+                </div>
+            </div>
+        `
+    $("#carouselTeacherCards").append(htmlCarousel);
     });
     //CreatePaginator(lessonRequests)
 }   
