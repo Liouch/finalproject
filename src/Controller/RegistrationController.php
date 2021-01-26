@@ -18,6 +18,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
+
 class RegistrationController extends AbstractController
 {
     
@@ -203,6 +204,7 @@ class RegistrationController extends AbstractController
         }
         for ($i=0; $i<count($languages); ++$i){
             $language = new Teacherslanguages();
+            $language->setActive("1");
             $language->setIduser($user);
             $langId = $this->getDoctrine()->getRepository(Languages::class)->find($languages[$i]);
             $language->setIdlanguage($langId);

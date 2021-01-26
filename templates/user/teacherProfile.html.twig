@@ -3,54 +3,50 @@
 {% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
-{{dump(Teacher)}}
-{{dump(user)}}
-{{dump(app.user)}}
-{{dump(Languages)}}
-{{dump(TeacherLanguages)}}
-<div class="row">
-    <div class="col-6">
+<div class="row justify-content-center mt-5">
+    <div class="col-10 col-sm-7 col-lg-4">
+        <h1 class="h3 mb-3 font-weight-normal text-center">Your teacher profile {{user.name}}</h1>
+    </div>
+</div>
+<div class="row justify-content-center mt-2">
+    <div class="col-10 col-sm-7 col-lg-4">
+     {% set filepath = "/img/teacher/" ~ Teacher.iduser.id ~ "/" ~ Teacher.profilepic %}
+     <div class="row">
+                <div class="mb-2 rounded-circle custom-circle-image overflow-hidden mx-auto">
+                    <img src="{{filepath}}" alt="{{Teacher.profilepic}}" class="w-100 h-100" id="profilePic"/>
+                </div>
+            </div>
         <form action="{{ path('EditTeacher') }}" method="post" enctype="multipart/form-data">
             <input type="hidden" name="formUserToTeacher">
-            <div class="form-group">
-                <label for="Title">Title</label>
-                <input type="text" name="Title" id="Title" placeholder="English teacher..." value={{Teacher.Title}} required>
-            </div>
-            <div class="form-group">
-                <label for="languages">Languages you teach</label>
-                <select name="languages[]" id="languages" class="form-control" multiple required>
-                
-                    {% for language in Languages %}
-                    {% set selected = "" %}
-                        {% for teacherLanguage in TeacherLanguages %}
-                            {% if teacherLanguage.idlanguage.id == language.id %}
-                                {% set selected = "selected" %}
-                            {% endif %}
-                        {% endfor %}
-                        <option value="{{language.id}}" {{selected}}>{{language.language}}</option>
+            
+            <label for="Title">Title</label>
+            <input type="text" class="form-control mb-1" name="Title" id="Title" placeholder="English teacher..." value={{Teacher.Title}} required>
+            
+            <label for="languages">Languages you teach</label>
+            <select name="languages[]" id="languages" class="form-control" multiple required>
+                {% for language in Languages %}
+                {% set selected = "" %}
+                    {% for teacherLanguage in TeacherLanguages %}
+                        {% if teacherLanguage.idlanguage.id == language.id %}
+                            {% set selected = "selected" %}
+                        {% endif %}
                     {% endfor %}
-                </select>
-            </div>
-
-            <div class="textArea">
-                <label for="description">Description</label>
-                <textarea type="text" maxlength="1000" name="description" id="description" placeholder="Describe yourself as a teacher" required>{{Teacher.description}}</textarea>
-            </div>
-            <div class="form-group" id="TeacherProfilePic">
-                <label for="profilePic">Profile pic</label>
-                <input type="file" id="profilePic" name="profilePic" class="form-control" aria-describedby="profilePic" placeholder="profilePic"></input>
-                {% set filepath = "/img/teacher/" ~ Teacher.iduser.id ~ "/" ~ Teacher.profilepic %}
-                <img src="{{filepath}}" alt="{{Teacher.profilepic}}"/>
-            </div>
-
-             <div class="form-group">
-                <button class="btn btn-primary" type="submit">Update</button>
-            </div>
+                    <option value="{{language.id}}" {{selected}}>{{language.language}}</option>
+                {% endfor %}
+            </select>
+            <label for="description">Description</label>
+            <textarea type="text" class="form-control mb-1" maxlength="1000" name="description" id="description" placeholder="Describe yourself as a teacher" required>{{Teacher.description}}</textarea>
+ 
+            <label for="profilePic">Profile pic</label>
+            <label for="profilePicChange">Change profile pic</label>
+            <input class="form-control p-1" type="file" id="profilePicChange" name="profilePic"  aria-describedby="profilePic" placeholder="profilePic"></input>         
+ 
+            <button class="btn btn-primary col-12 col-sm-12 col-lg-4 float-sm-right my-2" type="submit">Update</button>
+            
             <input type="hidden" name="idTeacher" value="{{Teacher.id}}">
-
-
         </form>
     </div>
+</div>
 </div>
 
 {% endblock %}

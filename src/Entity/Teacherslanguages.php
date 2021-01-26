@@ -4,11 +4,13 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
+
+
 /**
  * Teacherslanguages
  * @ApiResource()
  * @ORM\Table(name="teachersLanguages", indexes={@ORM\Index(name="fk_teacherLanguage_idx", columns={"idLanguage"}), @ORM\Index(name="fk_teacherID_idx", columns={"idUser"})})
- * @ORM\Entity
+ *  @ORM\Entity(repositoryClass="App\Repository\TeachersLanguagesRepository")
  */
 class Teacherslanguages
 {

@@ -38,6 +38,8 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/register/user , roles: [IS_ANONYMOUS] }
+        - { path: ^/register/teacher , roles: [IS_ANONYMOUS, IS_AUTHENTICATED_FULLY] }
         - { path: ^/profile/teacher , roles: [ROLE_TEACHER, IS_AUTHENTICATED_FULLY] }
         #- { path: ^/profile/user , [roles: ROLE_USER, IS_AUTHENTICATED_FULLY] }
         #- { path: ^/categoria, roles: ROLE_ADMIN }

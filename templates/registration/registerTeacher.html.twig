@@ -28,9 +28,9 @@
                         label: 'Accept the Terms and Conditions'
                         }) }}
                 </div>              
-                <div class="class-form">   
+                  
                     <button class="btn btn-primary col-12 col-sm-12 col-lg-4 float-sm-right my-2" type="submit">Sign Up</button>
-                </div>
+                
                 {{ form_end(registrationForm) }}
 
             {% elseif app.user == true %}
@@ -43,9 +43,9 @@
                         }) }}
                 </div>
                 
-                <div class="class-form">   
+                   
                     <button class="btn btn-primary col-12 col-sm-12 col-lg-4 float-sm-right my-2" type="submit">Sign Up</button>
-                </div>
+                
                 <input type="hidden" name="id" value="{{app.user.id}}">
                 </form>
                     
