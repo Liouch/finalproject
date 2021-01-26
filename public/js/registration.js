@@ -24,7 +24,7 @@ function getLanguages(objData){
 function CallbackLanguages(result){
     objLanguages = result;
     console.log(objLanguages);
-    var returnValue;
+    var returnValue = "";
     $(objLanguages).each(function(index){
         returnValue = returnValue + `<option value="${this.id}">${this.language}</option>`
     })

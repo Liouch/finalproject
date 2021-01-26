@@ -25,6 +25,7 @@ class RegistrationController extends AbstractController
     {   
         // Create the registration form with symfony (email, pass and agree terms). New instance of users needed
         $user = new Users();
+
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
         $existUser = $this->getUser();
@@ -130,7 +131,7 @@ class RegistrationController extends AbstractController
             
         }
 
-        //************** Si es usuario existente ****************
+        //************** If it is already user ****************
 
         // As I can't get the name of the <form> created in FE, I proceed to create a hidden input with the name
         $userToTeacher = $request->request->get('formUserToTeacher');
@@ -172,25 +173,17 @@ class RegistrationController extends AbstractController
                 }
             
         }
-        $teacherData = '<div class="form-group">
+        $teacherData = '
                 <label for="name">Title</label>
-                <input type="text" name="Title" id="Title" placeholder="English teacher..." required>
-            </div>
-            <div class="form-group">
+                <input type="text" class="form-control mb-1" name="Title" id="Title" placeholder="English teacher..." required>
                 <label for="languages">Languages you teach</label>
-                <select name="languages[]" id="languages" class="form-control" multiple required>
-                    <option value=""></option>
-                    </select>
-            </div>
-
-            <div class="textArea">
+                <select name="languages[]" id="languages" class="form-control mb-1" multiple required>
+                </select>
                 <label for="description">Description</label>
-                <textarea type="text" maxlength="1000" name="description" id="description" placeholder="Describe yourself as a teacher" required></textarea>
-            </div>
-            <div class="form-group">
+                <textarea type="text" class="form-control mb-1" maxlength="1000" name="description" id="description" placeholder="Describe yourself as a teacher" required></textarea>
                 <label for="profilePic">Profile pic</label>
-                <input type="file" id="profilePic" name="profilePic" class="form-control" aria-describedby="profilePic" placeholder="profilePic"></input>
-            </div>';
+                <input type="file" id="profilePic" name="profilePic" class="form-control mb-1" aria-describedby="profilePic" placeholder="profilePic">
+            ';
         
         return $this->render('registration/registerTeacher.html.twig', [
             'registrationForm' => $form->createView(),

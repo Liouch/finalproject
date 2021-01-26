@@ -7,27 +7,32 @@
         {% for flashError in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flashError }}</div>
         {% endfor %}
-        <div class="row">
-            <div class="col-12 d-flex justify-content-center">
-                <h1>Register</h1>
+        <div class="row justify-content-center mt-5">
+            <div class="col-10 col-sm-7 col-lg-4">
+                <h3 class="h3 mb-3 font-weight-normal">Register</h3>
             </div>
         </div>
-        <div class="row">
-            <div class="col-12 d-flex justify-content-center">
+        <div class="row justify-content-center">
+            <div class="col-10 col-sm-7 col-lg-4">
 
                 {{ form_start(registrationForm) }}
                     <label for="name">Name</label>
-                    <input type="text" name="name" id="name" placeholder="Name" required>
-                    
+                    <input type="text" class="form-control mb-1" name="name" id="name" placeholder="Your name" required>                     
+                        
                     {{ form_row(registrationForm.email) }}
                     {{ form_row(registrationForm.plainPassword, {
                         label: 'Password'
-                    }) }}
-                    <div class="class-form">
-                        {{ form_row(registrationForm.agreeTerms) }}
+                        })
+                    }}
+                    <div class="mt-2">
+                        {{ form_row(registrationForm.agreeTerms, {
+                        label: 'Accept the Terms and Conditions'
+                        }) }}
                     </div>
+                
                     <div class="class-form">
-                        <button class="btn btn-primary" type="submit">Sign Up</button>
+                        <a href="http://finalproject.test/register/teacher" class="btn btn-secondary col-12 col-lg-7 col-xl-5">Become a teacher</a>   
+                        <button class="btn btn-primary col-12 col-sm-12 col-lg-4 float-sm-right mt-2 mt-lg-0" type="submit">Sign Up</button>
                     </div>
                     
                 {{ form_end(registrationForm) }}
