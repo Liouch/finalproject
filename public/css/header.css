@@ -1,0 +1,9 @@
+.header {
+    box-shadow: 0px 2px 10px rgba(128, 128, 128, 0.358);
+}
+.header-fix {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 9999;
+}

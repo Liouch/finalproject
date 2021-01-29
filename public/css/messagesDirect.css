@@ -1,0 +1,31 @@
+#messageTextArea {
+    width: 100%;
+    line-height: 1
+}
+#SendMessage{
+    height: auto;
+    padding: 0;
+    
+}
+#messagesList {
+    background-color: rgba(0,0,0,0.03);
+    height: 75vh;
+    overflow-y: scroll;    
+}
+.message-container{
+    border-radius: 25px;
+    padding: 10px;
+}
+.message-container-sender{
+    background-color: #82ccdd;
+    margin-left: 10px;   
+}
+.message-container-receiver{
+    background-color: yellow;
+    margin-right: 10px;
+}
+.message{
+    margin: 0px 1vw;
+    font-size: small;
+    
+}

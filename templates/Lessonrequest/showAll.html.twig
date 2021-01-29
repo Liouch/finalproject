@@ -3,17 +3,20 @@
 {% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
-    <div class="row p-5">
-        <div class="col-12">
-            Filter by: 
+    
+    <div class="row justify-content-center my-5">
+        <div class="col-9 list-group custom-list-group list-group-horizontal mb-3">
+            <p class="mr-2">Filter by:</p>
+                <li class="list-group-item no-text-decoration" id="filter-language"><a href="#" class="text-color-black">Language</a></li>
+                <li class="list-group-item" id="filter-date"><a href="#" class="text-color-black">Date</a></li> 
         </div>
         
-            <div class="col-12" id="lessonRequestList">
-            
-            </div>
+        <div class="col-9" id="lessonRequestList">
+        
+        </div>
         
         <div class="row">
-            <div class="col-12" id="lessonRequestpagination"></div>
+            <div class="col-9" id="lessonRequestpagination"></div>
         </div>
     </div>
     {% if user %}

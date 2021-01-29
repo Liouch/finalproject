@@ -1,7 +1,8 @@
 $(document).ready(function(){
     InitializeMessagesDirect();
+    
 });
-
+var scrolled=false;
 function InitializeMessagesDirect(){
     LoadMessages();
     EventsMessagesDirect();
@@ -15,19 +16,22 @@ function EventsMessagesDirect(){
     $("#messageTextForm").on("submit", function(e){
         e.preventDefault();
         SendMessageDirect(e.target);
-        
+    })
+    $("#messagesList").on("scroll", function(){
+        scrolled=true;
     })
 }
 function LoadMessages(){  
     GetMessages();
     printSendMessage();
+    
 }
 
 function SendMessageDirect(obj){
-    const idLoggedUser = $("#messagesList")[0].dataset.idloggeduser;
-    const idLoggedUser1 = $("#messagesList").data.idloggeduser;
-    console.log(idLoggedUser1);
-    const idTeacher = $("#messagesList")[0].dataset.iduser;
+    //const idLoggedUser = $("#messagesList")[0].dataset.idloggeduser;
+    //const idTeacher = $("#messagesList")[0].dataset.iduser;
+    const idLoggedUser = $("#messagesList").data("idloggeduser")
+    const idTeacher = $("#messagesList").data("iduser");    
 
     var formData = new FormData(obj);
     var message = formData.get('message');
@@ -53,7 +57,7 @@ function SendMessageDirect(obj){
 function CallbackSaveMessage(result){
     //HideDivBlock();    
     GetMessages();
-    $("#message").val(''); 
+    $("#messageTextArea").val(''); 
     
 }
 
@@ -61,8 +65,10 @@ function CallbackSaveMessage(result){
 function GetMessages(){
     //var idLoggedUser = $("#messagesList").attr("idloggeduser");
     //var conversationIdUser = $("#messagesList").attr("iduser");
-    const idLoggedUser = $("#messagesList")[0].dataset.idloggeduser;
-    const idTeacher = $("#messagesList")[0].dataset.iduser;
+    //const idLoggedUser = $("#messagesList")[0].dataset.idloggeduser;
+    //const idTeacher = $("#messagesList")[0].dataset.iduser;
+    const idLoggedUser = $("#messagesList").data("idloggeduser")
+    const idTeacher = $("#messagesList").data("iduser");    
 
     var url = "http://finalproject.test/messages/get/"+idTeacher;
     console.log(url);
@@ -77,6 +83,7 @@ function GetMessages(){
     .done(function(result){
         CallbackGetMessages(idLoggedUser, result);
         setTimeout(GetMessages, 10000);
+        
     })
     
 }
@@ -90,18 +97,23 @@ function printMessages(idLoggedUser, messages){
     messagesList.html('');
     $(messages).each(function(index){
         if (this.idUser == idLoggedUser){
-            var align = "text-right";
+            var align = "row justify-content-end";
+            var messageContainer = "message-container-sender"
         }else{
-            var align = "text-left";
+            var align = "row justify-content-start";
+            var messageContainer = "message-container-receiver"
         }
         var html = `
-        <div class="message ${align}">
-            <p class="date">${this.MessageDate}</p>
-            <p>${this.Message}</p>
+        
+        <div class="${align} mb-2">
+            <div class="message-container col-auto ${messageContainer}">
+            <p class="message">${this.Message}</p>
+            </div>
         </div>`;
     messagesList.append(html);
-
+    
     });
+    MessageListScroll()
 }
 function printSendMessage(){
     //var idLoggedUser = $("#messagesList").attr("data-idloggeduser");
@@ -110,14 +122,25 @@ function printSendMessage(){
     var html = `
     <form id="messageTextForm">
     <div class="row">
-    <div class="col-10">
-        <textarea class="form-control" id="message" row="1" name="message" required></textarea>
-    </div>
-    <div class"=col-2">
-        <button type="submit" class="btn btn-primary btn-send" id="btn-send"">Send</button>
-    </div>
-    </div>
-    <form>`;
-    SendMessage.append(html);
    
+        <div class="col-10 col-xl-11 pr-0">
+            <textarea class="form-control pb-0" id="messageTextArea" row="1" name="message" required></textarea>
+        </div>
+        <div class="col-1 pl-0">
+            <button type="submit" class="btn btn-primary btn-send" id="btn-send"">Send</button>
+        </div>        
+    
+    </div>
+    </form>`;
+    SendMessage.append(html);
+    
 }
+
+function MessageListScroll(){
+    if (!scrolled){
+        var MessageDiv = document.getElementById('messagesList');
+        MessageDiv.scrollTop = MessageDiv.scrollHeight;
+        console.log(MessageDiv.scrollHeight);
+    }
+}
+    

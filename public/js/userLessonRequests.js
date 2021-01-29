@@ -38,7 +38,7 @@ function getLanguages(objData){
 function CallbackLanguages(result){
     objLanguages = result;
     LoadLessonRequests()
-    console.log(objLanguages);
+    //console.log(objLanguages);
 }
 function LoadLessonRequests(){
     GetLessonRequests()
@@ -55,7 +55,7 @@ function GetLessonRequests(){
         }
     })
     .done(function(result){
-        console.log(result);
+        //console.log(result);
         CallbackLessonRequests(result);
     })
     
@@ -63,7 +63,7 @@ function GetLessonRequests(){
 function CallbackLessonRequests(result){
     printLessonRequests(result);
     //HideDivBloc()
-    console.log(result);
+    //console.log(result);
 }
 
 function printLessonRequests(lessonRequests){
@@ -73,18 +73,24 @@ function printLessonRequests(lessonRequests){
     $(lessonRequests).each(function(index){
         var nameLanguage = GetNameLanguage(this.idlanguage);
         var idLanguage = GetIdLanguageApi(this.idlanguage);
-        var html = `<div class="row pb-2 pt-2">
-        <div class="col-3" id="title_${this.id}">${this.title}</div>
-        <div class="col-3" id="description_${this.id}">${this.description}</div>
-        <div class="col-2" id="language_${this.id}">${nameLanguage}</div>
-        <div class="col-2" id="date_${this.date}">${this.date}</div>
-        <div class="col-1">
-            <button type="button" class="btn btn-primary btn-edit" id="${this.id}" idLanguage="${idLanguage}">Edit</button> 
+        var html = `
+        <div class="card mb-4" id="card-lesson">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-12 col-sm-4 text-left" id="title_${this.id}">${this.title}</div>
+                    <div class="col-12 col-sm-4 text-left text-sm-center" id="language_${this.id}">${nameLanguage}</div>
+                    <div class="col-12 col-sm-4 text-left text-sm-right" id="date_${this.id}">${this.date}</div>
+                </div>
+            </div>
+            <div class="card-body">
+                <p class="card-text" id="description_${this.id}">${this.description}</p>
+                <div class="text-right">
+                    <button type="button" class="col-12 col-sm-3 col-md-2 col-xl-1 mt-2 mt-sm-0 btn btn-primary btn-edit" id="${this.id}" idLanguage="${idLanguage}">Edit</button> 
+                    <button type="button" class="col-12 col-sm-3 col-md-2 col-xl-1 mt-2 mt-sm-0 btn btn-danger btn-delete" id="${this.id}">Delete</button>
+                </div>
+            </div>
         </div>
-        <div class="col-1">
-            <button type="button" class="btn btn-secondary btn-delete" id="${this.id}">Delete</button>
-        </div>
-        </div>`;
+        `;
     lessonRequestList.append(html);
     });
     //CreatePaginator(lessonRequests)
@@ -99,12 +105,13 @@ function ShowNewLessonRequest(){
     var idLanguage = "cbLanguage";
     
     var body = 
-            `<label>Title</label><br>
-            <input type="text" id="${idTitle}" required></input><br>
-            <label>Description</label><br>
-            <input type="text" id="${idDescription}" required></input><br>
-            <label>Language</label><br>
-           ${CreateLanguageCombo(idLanguage)}<br>
+            `
+            <label>Title</label>
+            <input type="text" class="form-control mb-2" id="${idTitle}" required></input>
+            <label>Description</label>
+            <textarea class="form-control mb-2 row="3" maxlength="500" id="${idDescription}" required></textarea>
+            <label>Language</label>
+           ${CreateLanguageCombo(idLanguage)}
            `;
            
     
@@ -124,12 +131,12 @@ function ShowEditLessonRequest(obj){
     var idDescription = "txtLessonRequestDescription";
     var idLanguage = "cbLanguage";
     var body = 
-            `<label>Title</label><br>
-            <input type="text" id="${idTitle}" value="${title}" required></input><br>
-            <label>Description</label><br>
-            <input type="text" id="${idDescription}" value="${description}" required></input><br>
-            <label>Language</label><br>
-           ${CreateLanguageCombo(idLanguage, idLang)}<br>
+            `<label>Title</label>
+            <input type="text" class="form-control mb-2" id="${idTitle}" value="${title}" required></input>
+            <label>Description</label>
+            <textarea class="form-control mb-2" id="${idDescription}" row="3" maxlength="500" required>${description}</textarea>
+            <label>Language</label>
+           ${CreateLanguageCombo(idLanguage, idLang)}
            `;
     var click = `"EditLessonRequest('${idTitle}', '${idDescription}', '${idLanguage}', '${id}')"`;
 
@@ -162,13 +169,16 @@ function ModalWindow(body, click, value){
                                 </button>
                             </div>
                             <div class="modal-body">
+                            
                                 ${body}                            
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" id="btnBorrar" onclick=${click} data-dismiss="modal"
+                                <button type="submit" class="btn btn-danger" id="btnBorrar" onclick=${click} data-dismiss="modal"
                                 >${value}</button>
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                
                             </div>
+                            
                         </div>
                     </div>
                 </div>`
@@ -198,7 +208,7 @@ function NewLessonRequest(idTitle, idDescription, idLanguage){
         data: objItem,
         functionName: CallbackSaveLessonRequest
     }
-    console.log(objItem);
+    //console.log(objItem);
     AjaxPost(obj);
 
 }
@@ -245,13 +255,13 @@ function DeleteLessonRequest(id){
 
 function CallbackDeleteLessonRequest(result){
     var id = result.id;
-    $("#"+id).closest("div[class*='row']").remove();
+    $("#"+id).closest("div[id*='card-lesson']").remove();
     console.log(result.id);
     
 }
 function GetNameLanguage(language){
     var returnValue = "";
-    console.log(objLanguages);
+    //console.log(objLanguages);
     $(objLanguages).each(function(index){
         var id = this.id;
         var idApi = GetIdLanguageApi(language);
@@ -266,7 +276,7 @@ function GetIdLanguageApi(value){
     return value.split("/")[3];
 }
 function CreateLanguageCombo(idLanguage, idLang=null){
-    var returnValue = `<select id="${idLanguage}" required>`;
+    var returnValue = `<select class="form-control" id="${idLanguage}" required>`;
     returnValue = returnValue + `<option style="display:none">Select a language</option>`;
     $(objLanguages).each(function(index){
         var selected = "";

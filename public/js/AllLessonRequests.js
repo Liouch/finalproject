@@ -60,15 +60,24 @@ function printLessonRequests(lessonRequests){
         var idUser = GetIdApi(this.iduser);
         
         var html = `
-                <div class="card mt-2">
-                    <div class="card-header" id="title_${this.id}">${this.title} - ${nameLanguage}</div>
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-12 col-sm-4 text-left" id="title_${this.id}">${this.title}</div>
+                            <div class="col-12 col-sm-4 text-left text-sm-center" id="language_${this.id}">${nameLanguage}</div>
+                            <div class="col-12 col-sm-4 text-left text-sm-right" id="language_${this.id}">${this.date}</div>
+                        </div>
+                    </div>
                     <div class="card-body">
                         <p class="card-text">${this.description}</p>
                         <div class="text-right">
                             <button type="button" class="btn btn-primary btn-send" id="${this.id}" idUser="${idUser}">Send Message</button>
                         </div>
                     </div>
-                </div>`
+                </div>
+                </div>`;
+
+
     lessonRequestList.append(html);
     });
     //CreatePaginator(lessonRequests)

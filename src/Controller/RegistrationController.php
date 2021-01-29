@@ -183,7 +183,7 @@ class RegistrationController extends AbstractController
                 <label for="description">Description</label>
                 <textarea type="text" class="form-control mb-1" maxlength="1000" name="description" id="description" placeholder="Describe yourself as a teacher" required></textarea>
                 <label for="profilePic">Profile pic</label>
-                <input type="file" id="profilePic" name="profilePic" class="form-control mb-1" aria-describedby="profilePic" placeholder="profilePic">
+                <input type="file" id="profilePic" name="profilePic" class="form-control mb-1 p-1" aria-describedby="profilePic" placeholder="profilePic">
             ';
         
         return $this->render('registration/registerTeacher.html.twig', [

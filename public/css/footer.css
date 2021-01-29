@@ -1,0 +1,17 @@
+#footer {
+    flex-shrink: 0;
+}
+ul li{
+    list-style-type: none;
+}
+#footer1, #footer2 {
+    margin: auto 0px;
+}
+#footer1, #footer1 a{
+    background-color: #515050;
+    color: white;
+}
+#footer2, #footer span{
+    background-color: #e8c343;
+    color:white;
+}

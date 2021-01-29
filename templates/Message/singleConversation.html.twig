@@ -1,29 +1,32 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Messages!{% endblock %}
 
 {% block stylesheets %}
-<link rel="stylesheet" href="/css/messages.css">
+<link rel="stylesheet" href="/css/messagesDirect.css">
 {% endblock %}
 
 {% block body %}
-Message controller
-
-<div class="row p-5 justify-content-center">
-    {% if (error == false)  %}
-       
-        <div class="col-4" id="messagesList" data-idLoggedUser="{{user.id}}" data-idUser="{{idUserConversation}}"></div>
+<div class="row justify-content-center mt-5" id="title">
+    <div class="col-10 col-sm-7 col-lg-4">
+        <h1 class="h3 mb-3 font-weight-normal text-center">{{user.name}}</h1>
+    </div>
 </div>
-<div class="row justify-content-center">
-        <div class="col-4 align-self-center" id="SendMessage"></div>
+{% if (error == false)  %}
+    <div class="row justify-content-center mb-2">
+        <div class="col-10 col-md-8 col-lg-6 py-2 mx-0" id="messagesList" data-idLoggedUser="{{user.id}}" data-idUser="{{idUserConversation}}"></div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-10 col-md-8 col-lg-6 mb-5" id="SendMessage"></div>
+    </div>
 
-        {% else %}
-        <div class="col-4">
-            <p>{{error}}</p>
-        </div>
-        {% endif %}
-        {# <button type="button" class="btn btn-primary">Go back to Messages</button> #}
-</div>
+{% else %}
+    <div class="col-4">
+        <p>{{error}}</p>
+    </div>
+    {% endif %}
+    {# <button type="button" class="btn btn-primary">Go back to Messages</button> #}
+
 {% endblock %}
 {% block javascripts %}
 <script src="/js/messagesDirect.js"></script>
