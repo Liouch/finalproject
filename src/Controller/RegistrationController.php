@@ -85,7 +85,7 @@ class RegistrationController extends AbstractController
         $user = new Users();
         $teacher = new Teachers();
 
-        //************** Si es nuevo usuario ****************
+        //************** if new user ****************
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
          
@@ -144,6 +144,7 @@ class RegistrationController extends AbstractController
             if (!$isTeacher){
                 $this->setTeacherInfo($teacher, $existUser, $request);
                 $this->setTeacherProfilePic($teacher, $existUser, $request);
+                
                 $this->Save($teacher);
                 //The following method already deals with the edit profile of the languagues
                 $this->setTeacherLanguages($existUser, $request);
@@ -219,6 +220,7 @@ class RegistrationController extends AbstractController
         $teacher->setTitle($request->request->get('Title'));
         $teacher->setDescription($request->request->get('description'));
         $teacher->setIduser($user);
+        $teacher->setSignupdate(new \DateTime());
                
        
     }

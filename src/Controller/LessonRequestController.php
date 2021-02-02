@@ -41,7 +41,7 @@ class LessonRequestController extends AbstractController
         $listLessonRequests = $this->get('serializer')->serialize($listLessonRequests, 'json');
         $response = new Response($listLessonRequests); */
         $user = $this->getUser();
-       
+        
         return $this->render('Lessonrequest/showAll.html.twig', [
             'user' => $user,
         ]);

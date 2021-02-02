@@ -41,8 +41,4 @@ security:
         - { path: ^/register/user , roles: [IS_ANONYMOUS] }
         - { path: ^/register/teacher , roles: [IS_ANONYMOUS, IS_AUTHENTICATED_FULLY] }
         - { path: ^/profile/teacher , roles: [ROLE_TEACHER, IS_AUTHENTICATED_FULLY] }
-        #- { path: ^/profile/user , [roles: ROLE_USER, IS_AUTHENTICATED_FULLY] }
-        #- { path: ^/categoria, roles: ROLE_ADMIN }
-        #- { path: ^/multimedia, roles: ROLE_ADMIN }
-        #- { path: ^/usuario, roles: [ROLE_USER, IS_AUTHENTICATED_FULLY] }
-        #- { path: ^/, roles: [IS_AUTHENTICATED_FULLY] }
+        

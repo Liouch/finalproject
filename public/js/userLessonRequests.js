@@ -66,37 +66,39 @@ function CallbackLessonRequests(result){
     //console.log(result);
 }
 
-function printLessonRequests(lessonRequests){
-    //var lessons = lessonRequests["hydra:member"];
+function printLessonRequests(lessonRequestsObj){
+    var lessonRequests = lessonRequestsObj;
     var lessonRequestList = $('#lessonRequestList');
     lessonRequestList.html('');
-    $(lessonRequests).each(function(index){
-        var nameLanguage = GetNameLanguage(this.idlanguage);
-        var idLanguage = GetIdLanguageApi(this.idlanguage);
-        var html = `
-        <div class="card mb-4" id="card-lesson">
-            <div class="card-header">
-                <div class="row">
-                    <div class="col-12 col-sm-4 text-left" id="title_${this.id}">${this.title}</div>
-                    <div class="col-12 col-sm-4 text-left text-sm-center" id="language_${this.id}">${nameLanguage}</div>
-                    <div class="col-12 col-sm-4 text-left text-sm-right" id="date_${this.id}">${this.date}</div>
+    if (lessonRequests.length == 0 ){
+        var html = `<p class="text-center">You don't have any lesson requests yet. Publish a lesson request</p>`
+        lessonRequestList.append(html);
+    }else{
+        $(lessonRequests).each(function(index){
+            var nameLanguage = GetNameLanguage(this.idlanguage);
+            var idLanguage = GetIdApi(this.idlanguage);
+            var html = `
+            <div class="card mb-4" id="card-lesson">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-12 col-sm-4 text-left" id="title_${this.id}">${this.title}</div>
+                        <div class="col-12 col-sm-4 text-left text-sm-center" id="language_${this.id}">${nameLanguage}</div>
+                        <div class="col-12 col-sm-4 text-left text-sm-right" id="date_${this.id}">${this.date}</div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="card-text" id="description_${this.id}">${this.description}</p>
+                    <div class="text-right">
+                        <button type="button" class="col-12 col-sm-3 col-md-2 col-xl-1 mt-2 mt-sm-0 btn btn-primary btn-edit" id="${this.id}" idLanguage="${idLanguage}">Edit</button> 
+                        <button type="button" class="col-12 col-sm-3 col-md-2 col-xl-1 mt-2 mt-sm-0 btn btn-danger btn-delete" id="${this.id}">Delete</button>
+                    </div>
                 </div>
             </div>
-            <div class="card-body">
-                <p class="card-text" id="description_${this.id}">${this.description}</p>
-                <div class="text-right">
-                    <button type="button" class="col-12 col-sm-3 col-md-2 col-xl-1 mt-2 mt-sm-0 btn btn-primary btn-edit" id="${this.id}" idLanguage="${idLanguage}">Edit</button> 
-                    <button type="button" class="col-12 col-sm-3 col-md-2 col-xl-1 mt-2 mt-sm-0 btn btn-danger btn-delete" id="${this.id}">Delete</button>
-                </div>
-            </div>
-        </div>
-        `;
-    lessonRequestList.append(html);
-    });
-    //CreatePaginator(lessonRequests)
+            `;
+        lessonRequestList.append(html);
+        });
+    }
     
-   
-
 }   
 
 function ShowNewLessonRequest(){
@@ -259,22 +261,7 @@ function CallbackDeleteLessonRequest(result){
     console.log(result.id);
     
 }
-function GetNameLanguage(language){
-    var returnValue = "";
-    //console.log(objLanguages);
-    $(objLanguages).each(function(index){
-        var id = this.id;
-        var idApi = GetIdLanguageApi(language);
-        if ( id == idApi){
-            returnValue = this.language;
-            return false;
-        }
-    });
-    return returnValue;
-}
-function GetIdLanguageApi(value){
-    return value.split("/")[3];
-}
+
 function CreateLanguageCombo(idLanguage, idLang=null){
     var returnValue = `<select class="form-control" id="${idLanguage}" required>`;
     returnValue = returnValue + `<option style="display:none">Select a language</option>`;

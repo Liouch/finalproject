@@ -26,11 +26,13 @@
             {% set idUserVar = "" %}
             {% if user.id == messages.iduser.id %}
                 {% set idUserVar = messages.idteacher.id %}
+                {% set nameConversation = messages.idteacher.name %}
             {% else %}
                 {% set idUserVar = messages.iduser.id %}
+                {% set nameConversation = messages.iduser.name %}
             {% endif %}
             <div class="card mt-2 card-message" idLoggedUser={{user.id}} idUser={{idUserVar}}>
-                <div class="card-header">{{messages.iduser.name}}</div>
+                <div class="card-header">{{nameConversation}}</div>
                 <div class="card-body">
                     <p class="card-text cut-text">{{messages.message}}</p>
                 </div>

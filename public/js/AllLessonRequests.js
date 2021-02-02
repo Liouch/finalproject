@@ -1,23 +1,41 @@
 $(document).ready(function(){
-    InitializeRegistration();
+    console.log("hey");
+    InitializeLessonRequests();
+
 });
 
-function InitializeRegistration(){
+function InitializeLessonRequests(){
     EventsLessonRequest();
     LoadLanguages();
+
 }
 
 function EventsLessonRequest(){
     $("#lessonRequestList").on("click", "button[class*='btn-send']", function(){
         ShowSendMessageModal(this);
-    })
+    });
+    $("#filtersForm").on("submit", function(e){
+        e.preventDefault();
+        //console.log(window.location.search)
+        applyFilters(e.target);
+        LoadLessonRequests(filter);
+    });
+    $(".btn-filter-clear").on("click", function(){
+        clearFilters();
+    });
+    $("#lessonRequestpagination").on("click", "button:not(:disabled)", function(){
+        ClickPaginator(this);
+     });
+    
 }
 
 var objLessonRequests;
+var filter;
 
 function LoadLanguages(){
     var obj = { page: 1}
     getLanguages(obj);
+
 }
 
 function getLanguages(objData){
@@ -30,160 +48,82 @@ function getLanguages(objData){
 }
 function CallbackLanguages(result){
     objLanguages = result;
-    LoadLessonRequests()
+    languagesFilter();
+    LoadLessonRequests();
 }
 
-function LoadLessonRequests(){
+function LoadLessonRequests(filter="", currentPage = 1){
     var obj = {
-        url: "http://localhost:8000/api/lessonrequests",
-        data: { page: 1},
+        url: "http://finalproject.test/api/lessonrequests?active=1"+filter,
+        data: { 
+            page: currentPage,
+            itemsPerPage: 5,
+            active: 1,
+        },
         functionName: CallbackGetAllLessons
     }
-    AjaxGetAll(obj)
+    //console.log(obj.url);
+    AjaxGetAll(obj, null)
 }
 
 function CallbackGetAllLessons(result){
     objLessonRequests = result;
-    console.log(objLessonRequests);
+    //console.log(objLessonRequests);
+    
     printLessonRequests(objLessonRequests)
     
 }
 
-function printLessonRequests(lessonRequests){
-    //var lessons = lessonRequests["hydra:member"];
+function printLessonRequests(lessonRequestsObj){
+    var lessonRequests = lessonRequestsObj["hydra:member"];
     var lessonRequestList = $('#lessonRequestList');
     lessonRequestList.html('');
-    $(lessonRequests).each(function(index){
-        
-        var nameLanguage = GetNameLanguage(this.idlanguage);
-        var idLanguage = GetIdApi(this.idlanguage);
-        var idUser = GetIdApi(this.iduser);
-        
-        var html = `
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <div class="row">
-                            <div class="col-12 col-sm-4 text-left" id="title_${this.id}">${this.title}</div>
-                            <div class="col-12 col-sm-4 text-left text-sm-center" id="language_${this.id}">${nameLanguage}</div>
-                            <div class="col-12 col-sm-4 text-left text-sm-right" id="language_${this.id}">${this.date}</div>
+    if (lessonRequests.length == 0 ){
+        var html = `<p class="text-center">There are no lesson requests right now</p>`
+        lessonRequestList.append(html);
+    }else{
+        $(lessonRequests).each(function(index){
+            var date = getDateWithoutTime(this.date);
+            var nameLanguage = GetNameLanguage(this.idlanguage);
+            var idUser = GetIdApi(this.iduser);
+            var html = `
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-12 col-sm-4 text-left" id="title_${this.id}">${this.title}</div>
+                                <div class="col-12 col-sm-4 text-left text-sm-center" id="language_${this.id}">${nameLanguage}</div>
+                                <div class="col-12 col-sm-4 text-left text-sm-right" id="language_${this.id}">${date}</div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">${this.description}</p>
+                            <div class="text-right">
+                                <button type="button" class="btn btn-primary btn-send" id="${this.id}" idUser="${idUser}">Send Message</button>
+                            </div>
                         </div>
                     </div>
-                    <div class="card-body">
-                        <p class="card-text">${this.description}</p>
-                        <div class="text-right">
-                            <button type="button" class="btn btn-primary btn-send" id="${this.id}" idUser="${idUser}">Send Message</button>
-                        </div>
-                    </div>
-                </div>
-                </div>`;
+                    `;
 
 
-    lessonRequestList.append(html);
-    });
-    //CreatePaginator(lessonRequests)
+        lessonRequestList.append(html);
+        });
+    }
+    createPaginator(lessonRequestsObj["hydra:view"], "#lessonRequestpagination");
 }   
 
-function ShowSendMessageModal(obj){
-    var button=$(obj);
-    var idLessonRequest = button.attr('id');
-    var idUser = button.attr('idUser');
-    var idTeacher = $("#idTeacher").val();
-    console.log(button);
-    console.log(idTeacher);
-    console.log(idUser);
-    var title = $("#title_" + idLessonRequest).text();
-    
-    var idTitle = "txtLessonRequestTitle";
-    var message= "message";
-
-    var body = 
-            `<label>Title</label><br>
-            <input class="form-control" type="text" id="${idTitle}" placeholder="${title}" readonly></input><br>
-            
-            <label for="${message}">Message</label>
-            <textarea class="form-control" id="${message}" rows="3"></textarea>
-           `;
-    var click = `"SendMessage('${idUser}', '${idLessonRequest}', '${idTeacher}', '${message}' )"`;
-
-    var value = "Send";
-    ModalWindow(body, click, value);
-}
-function ModalWindow(body, click, value){
-    var id = 'modal';
-    
-    $(`#${id}`).remove(); 
-    var html = `<div class="modal fade" id="${id}" tabindex="-1" role="dialog" aria-hidden="true" style="z-index:9999">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Send a message</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                ${body}                            
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" id="btnSend" onclick=${click} data-dismiss="modal"
-                                >${value}</button>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>`
-    $('body').append(html);
-    $(`#${id}`).modal('show');
-}
-
-function SendMessage(idUser, idLessonRequest, idTeacher, message){
-    var idUser = idUser;
-    var idLessonRequest = idLessonRequest;
-    var idTeacher = idTeacher;
-    var message = $("#"+message).val();
-    var html = "Sending message";
-    console.log(idTeacher);
-    //ShowDivBlock(html)
-
-    var objItem = {
-        message: message,
-        messagedate: ActualDateISO(),
-        idteacher: "api/users/" + idTeacher,
-        iduser: "api/users/" + idUser,
-        
-    }
-
-    var obj = {
-        url: "http://finalproject.test/api/messages",
-        data: objItem,
-        functionName: CallbackSaveLessonRequest
-    }
-    console.log(objItem);
-    AjaxPost(obj);
+function ClickPaginator(obj){
+    var objPage = $(obj).attr("page");
+    console.log(objPage);
+    LoadLessonRequests(filter, objPage);
 
 }
+
 function CallbackSaveLessonRequest(result){
     //HideDivBlock();
     alert("Message sent");
     LoadLessonRequests();
 }
 
-
-function GetNameLanguage(language){
-    var returnValue = "";
-    $(objLanguages).each(function(index){
-        var id = this.id;
-        var idApi = GetIdApi(language);
-        if ( id == idApi){
-            returnValue = this.language;
-            return false;
-        }
-    });
-    return returnValue;
-}
-function GetIdApi(value){
-    return value.split("/")[3];
-}
 function CreateLanguageCombo(idLanguage, idLang=null){
     var returnValue = `<select id="${idLanguage}" required>`;
     returnValue = returnValue + `<option style="display:none">Select a language</option>`;
@@ -196,4 +136,35 @@ function CreateLanguageCombo(idLanguage, idLang=null){
 
     return returnValue;
 
+}
+function languagesFilter(){
+    var filterLanguageSelect = $("#filterLanguages");
+    returnValue = `<option value="none" style="display:none">Languages</option>`;
+    $(objLanguages).each(function(index){
+        returnValue = returnValue + `<option value="${this.id}">${this.language}</option>`
+    })
+    filterLanguageSelect.append(returnValue)
+}
+function applyFilters(obj){
+    var formData = new FormData(obj);
+    var date = formData.get('date');
+    var languages = formData.get('languages');
+    const params = new URLSearchParams({
+        date: date,
+        idlanguage: languages,
+      });
+      params.toString();
+    console.log(params.toString());
+    var ApiParams = params.toString().replace("date", "[date]");
+    filter = "&order";
+    filter += ApiParams;
+    console.log(filter);
+    return filter;
+    
+    
+}
+function clearFilters(){
+   $("#filterDate").val('none').change();
+   $("#filterLanguages").val('none').change();
+   LoadLessonRequests();
 }

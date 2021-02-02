@@ -1,25 +1,43 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Lesson Requests!{% endblock %}
 
 {% block body %}
-    
     <div class="row justify-content-center my-5">
-        <div class="col-9 list-group custom-list-group list-group-horizontal mb-3">
+        {# <div class="col-9 list-group custom-list-group list-group-horizontal mb-3">
             <p class="mr-2">Filter by:</p>
                 <li class="list-group-item no-text-decoration" id="filter-language"><a href="#" class="text-color-black">Language</a></li>
                 <li class="list-group-item" id="filter-date"><a href="#" class="text-color-black">Date</a></li> 
+
+        </div> #}
+        <div class="col-9 mb-3">
+            <form name="filtersForm" method="GET" class="form-inline" id="filtersForm">
+                <label>Filter By:</label>
+                <select class="form-control mx-2" name="date" id="filterDate">
+                    <option value="none" style="display:none">Date</option>
+                    <option value="desc">Most recent</option>
+                    <option value="asc">Oldest</option>
+                </select>
+                <select class="form-control mx-2" name="languages" id="filterLanguages">
+                    
+                    
+                </select>
+                <div class="col-12 col-sm-12 col-md text-right text-md-left mt-md-0 mt-2">
+                    <button type="button" class="btn btn-secondary btn-filter-clear">Clear filters</button>
+                    <button type="submit" class="btn btn-primary btn-filter-apply">Apply</button>
+                </div>
+            </form>
         </div>
         
         <div class="col-9" id="lessonRequestList">
-        
+            
         </div>
-        
-        <div class="row">
-            <div class="col-9" id="lessonRequestpagination"></div>
-        </div>
+    </div> 
+    <div class="row justify-content-center my-5">
+        <div class="col-9 d-flex justify-content-center" id="lessonRequestpagination"></div>
+    
     </div>
-    {% if user %}
+    {% if user.idrole.id == "3" %}
         <input type="hidden" value={{user.id}} id="idTeacher"></input>
     {% endif %}
         

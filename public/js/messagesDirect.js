@@ -29,9 +29,9 @@ function LoadMessages(){
 
 function SendMessageDirect(obj){
     //const idLoggedUser = $("#messagesList")[0].dataset.idloggeduser;
-    //const idTeacher = $("#messagesList")[0].dataset.iduser;
-    const idLoggedUser = $("#messagesList").data("idloggeduser")
-    const idTeacher = $("#messagesList").data("iduser");    
+    //const idUserConversation = $("#messagesList")[0].dataset.iduser;
+    const idLoggedUser = $("#messagesList").data("idloggeduser");
+    const idUserConversation = $("#messagesList").data("iduser");    
 
     var formData = new FormData(obj);
     var message = formData.get('message');
@@ -41,8 +41,8 @@ function SendMessageDirect(obj){
     var objItem = {
         message: message,
         messagedate: ActualDateISO(),
-        idteacher: "api/users/" + idTeacher,
-        iduser: "api/users/" + idLoggedUser,
+        idteacher: "api/users/" + idLoggedUser,
+        iduser: "api/users/" + idUserConversation,
         
     }
     var obj = {
@@ -66,11 +66,11 @@ function GetMessages(){
     //var idLoggedUser = $("#messagesList").attr("idloggeduser");
     //var conversationIdUser = $("#messagesList").attr("iduser");
     //const idLoggedUser = $("#messagesList")[0].dataset.idloggeduser;
-    //const idTeacher = $("#messagesList")[0].dataset.iduser;
+    //const idUserConversation = $("#messagesList")[0].dataset.iduser;
     const idLoggedUser = $("#messagesList").data("idloggeduser")
-    const idTeacher = $("#messagesList").data("iduser");    
+    const idUserConversation = $("#messagesList").data("iduser");    
 
-    var url = "http://finalproject.test/messages/get/"+idTeacher;
+    var url = "http://finalproject.test/messages/get/"+idUserConversation;
     console.log(url);
     $.ajax({
         method: "GET",
@@ -95,8 +95,9 @@ function CallbackGetMessages(idLoggedUser, result){
 function printMessages(idLoggedUser, messages){
     var messagesList = $('#messagesList');
     messagesList.html('');
+    console.log(messages);
     $(messages).each(function(index){
-        if (this.idUser == idLoggedUser){
+        if (this.idTeacher == idLoggedUser){
             var align = "row justify-content-end";
             var messageContainer = "message-container-sender"
         }else{
@@ -140,7 +141,7 @@ function MessageListScroll(){
     if (!scrolled){
         var MessageDiv = document.getElementById('messagesList');
         MessageDiv.scrollTop = MessageDiv.scrollHeight;
-        console.log(MessageDiv.scrollHeight);
+        //console.log(MessageDiv.scrollHeight);
     }
 }
     

@@ -4,9 +4,17 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+
+
+
 /**
  * Lessonrequest
- * @ApiResource()
+ * @ApiResource(attributes={"pagination_client_items_per_page"=true})
+ * @ApiFilter(OrderFilter::class, properties={"date": "ASC"}, arguments={"orderParameterName"="order"})
+ * @ApiFilter(SearchFilter::class, properties={"idlanguage": "exact", "active": "exact"})
  * @ORM\Table(name="lessonRequest", indexes={@ORM\Index(name="fk_LessonUser_idx", columns={"idUser"}), @ORM\Index(name="fk_LessonLanguage_idx", columns={"idLanguage"})})
  * @ORM\Entity
  */

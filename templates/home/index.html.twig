@@ -1,18 +1,28 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Linwah!{% endblock %}
 
 {% block body %}
-<div class="row justify-content-center">
+<div class="row justify-content-center pt-3">
     <div class="col-6 justify-content-center">
-        <h1>New teachers</h1>
-    </div>
-    </div>
-    <div class="row justify-content-center">
-        <div class="col-10 col-sm-9 col-md-8 col-xl-6" id="top5NewTeachersList">
-        </div>
+        <h2>New teachers</h2>
     </div>
 </div>
+<div class="row justify-content-center">
+    <div class="col-10 col-sm-9 col-md-8 col-xl-6" id="top5NewTeachersList"></div>
+</div>
+<div class="row justify-content-center mt-lg-5">
+    <div class="col-6 justify-content-center">
+        <h2>New Lesson Requests</h2>
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col-10 col-sm-9 col-md-8 col-xl-6" id="top5NewLessonRequestList"></div>
+</div>
+{% if (user) and (user.idrole.id == "3") %}
+    <input type="hidden" value={{user.id}} id="idTeacher"></input>
+{% endif %}
+
 {% endblock %}
 {% block javascripts %}
 <script src="/js/home.js"></script>
