@@ -50,3 +50,20 @@ ShowConversation:
     path: /messages/{id}
     controller: App\Controller\MessageController::showConversation
 
+AdminPanel:
+    path: /admin/
+    controller: App\Controller\AdminController::showPanel
+
+AdminPanelLanguages:
+    path: /admin/languages
+    controller: App\Controller\AdminController::showLanguages
+
+AdminPanelTeachers:
+    path: /admin/teachers
+    controller: App\Controller\AdminController::showTeachers
+
+AdminPanelLessonRequests:
+    path: /admin/Lesson-requests
+    controller: App\Controller\AdminController::showLessonRequests
+
+

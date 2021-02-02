@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin Panel!{% endblock %}
+
+{% block body %}
+<div class="row justify-content-center mt-5">
+    <div class="col-4 text-center">
+        <a href="{{ path('AdminPanelLanguages')}}"><button type="button" class="btn btn-primary">Languages</button></a>
+    </div>
+    <div class="col-4 text-center">
+        <a href="{{ path('AdminPanelTeachers')}}"><button type="button" class="btn btn-primary">Teachers</button></a>
+    </div>
+    <div class="col-4 text-center">
+        <a href="{{ path('AdminPanelLessonRequests')}}"><button type="button" class="btn btn-primary">Lesson requests</button></a>
+    </div>
+</div>
+{% endblock %}
