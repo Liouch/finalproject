@@ -8,7 +8,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
  * Languages
  * @ApiResource()
  * @ORM\Table(name="languages")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\LanguagesRepository")
  */
 class Languages
 {

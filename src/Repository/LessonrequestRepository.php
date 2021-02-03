@@ -47,4 +47,19 @@ class LessonrequestRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function getLessonRequestWithUserName(){
+        $conn = $this->getEntityManager()->getConnection();
+        $query = "SELECT l.*, users.name, languages.language FROM Lessonrequest l JOIN users ON l.idUser= users.id JOIN languages ON l.idlanguage = languages.id ORDER BY l.id";
+        $stmt = $conn->prepare($query);
+        $stmt->execute();
+
+        return $stmt->fetchAllAssociative();
+    }
+    public function save(Lessonrequest $Lessonrequest):Lessonrequest {
+        $em = $this->getEntityManager();
+        $em->persist($Lessonrequest);
+        $em->flush();
+
+        return $Lessonrequest;
+    }
 }

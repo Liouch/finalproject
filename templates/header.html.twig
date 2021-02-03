@@ -36,12 +36,12 @@
         <div class="dropdown-menu dropdown-menu-lg-right" aria-labelledby="dropdownMenuButton" style="z-index:1000000">
         {% set userRole = app.user.idrole.id %}
         {% if userRole == 1 %}
-            <a class="dropdown-item" href="/usuario">Perfil</a>
-            <a class="dropdown-item" href="/admin">Check Ads</a> 
+            <a class="dropdown-item" href="{{ path('profileUser')}}">Profile</a>
+            <a class="dropdown-item" href="{{ path('AdminPanel')}}">Admin Panel</a> 
         {% elseif userRole == 2 %}
-            <a class="dropdown-item" href="{{ path('profileUser')}}">Perfil</a>
+            <a class="dropdown-item" href="{{ path('profileUser')}}">Profile</a>
         {% elseif userRole == 3 %}
-            <a class="dropdown-item" href="{{ path('profileTeacher')}}">Perfil</a>
+            <a class="dropdown-item" href="{{ path('profileTeacher')}}">Profile</a>
         {% endif %}
           <a class="dropdown-item" href="/logout">Logout</a>
           {% if is_granted('ROLE_USER') %}

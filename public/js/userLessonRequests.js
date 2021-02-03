@@ -157,7 +157,7 @@ function ShowDeleteLessonRequest(obj){
     ModalWindow(body,click,value);
 }
 
-function ModalWindow(body, click, value){
+/* function ModalWindow(body, click, value){
     var id = 'btnDeactivateLessonRequest';
     
     $(`#${id}`).remove(); //Show alert to confirm and make call to ajax
@@ -186,7 +186,7 @@ function ModalWindow(body, click, value){
                 </div>`
     $('body').append(html);
     $(`#${id}`).modal('show');
-}
+} */
 
 function NewLessonRequest(idTitle, idDescription, idLanguage){
     var title = $("#"+idTitle).val();

@@ -47,4 +47,11 @@ class LanguagesRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function save(Languages $language):Languages {
+        $em = $this->getEntityManager();
+        $em->persist($language);
+        $em->flush();
+
+        return $language;
+    }
 }

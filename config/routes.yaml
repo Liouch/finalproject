@@ -56,14 +56,40 @@ AdminPanel:
 
 AdminPanelLanguages:
     path: /admin/languages
-    controller: App\Controller\AdminController::showLanguages
+    controller: App\Controller\AdminController::showLanguagesPanel
 
+AdminPanelLanguagesGet:
+    path: /admin/languages/get/
+    controller: App\Controller\AdminController::getLanguages
+
+AdminPanelLanguagesNew:
+    path: /admin/languages/new/
+    controller: App\Controller\AdminController::addEditLanguages
+
+AdminPanelLanguagesEdit:
+    path: /admin/languages/edit/
+    controller: App\Controller\AdminController::addEditLanguages
+    
 AdminPanelTeachers:
     path: /admin/teachers
-    controller: App\Controller\AdminController::showTeachers
+    controller: App\Controller\AdminController::showTeachersPanel
+
+AdminPanelTeachersGet:
+    path: /admin/teachers/get/
+    controller: App\Controller\AdminController::getTeachers
+
+AdminPanelTeachersEdit:
+    path: /admin/teachers/edit/
+    controller: App\Controller\AdminController::deactivateTeachers
 
 AdminPanelLessonRequests:
-    path: /admin/Lesson-requests
+    path: /admin/lesson-requests
     controller: App\Controller\AdminController::showLessonRequests
 
+AdminPanelLessonRequestsGet:
+    path: /admin/lesson-requests/get/
+    controller: App\Controller\AdminController::getLessonRequests
 
+AdminPanelLessonRequestsEdit:
+    path: /admin/lesson-requests/edit/
+    controller: App\Controller\AdminController::deactivateLessonRequests

@@ -42,7 +42,7 @@ function LoadTop5NewLessonRequests(){
 
 function getTop5NewLessonRequets(objData){
     var obj = {
-        url: "http://finalproject.test/api/lessonrequests?order%5Bdate%5D=desc&page=1",
+        url: "http://finalproject.test/api/lessonrequests?active=1&order%5Bdate%5D=desc&page=1",
         data: objData,
         functionName: CallbackGetTop5NewLessonRequests
     }
@@ -50,6 +50,7 @@ function getTop5NewLessonRequets(objData){
 }
 
 function CallbackGetTop5NewLessonRequests(result){
+    console.log(result);
     printLessonRequests(result);
 }
 
@@ -62,7 +63,7 @@ function LoadTop5NewTeachers(){
 
 function getTop5NewTeachers(objData){
     var obj = {
-        url: "http://finalproject.test/api/teachers?order%5Bsignupdate%5D=desc",
+        url: "http://finalproject.test/api/teachers?active=1&order%5Bsignupdate%5D=desc",
         data: objData,
         functionName: CallbackGetTop5NewTEachers
     }

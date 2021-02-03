@@ -47,4 +47,19 @@ class TeachersRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function getTeachersWithUserInfo(){
+        $conn = $this->getEntityManager()->getConnection();
+        $query = "SELECT t.*, users.name FROM teachers t left join users ON t.idUser= users.id";
+        $stmt = $conn->prepare($query);
+        $stmt->execute();
+
+        return $stmt->fetchAllAssociative();
+    }
+    public function save(Teachers $teacher):Teachers {
+        $em = $this->getEntityManager();
+        $em->persist($teacher);
+        $em->flush();
+
+        return $teacher;
+    }
 }

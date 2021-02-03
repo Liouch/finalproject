@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Teachers Panel!{% endblock %}
+{% block title %}Lesson requests Panel!{% endblock %}
 
 {% block body %}
 <div class="row m-5">
@@ -9,23 +9,22 @@
     </div>
     <div class="col-12 mt-3">
         <div class="row justify-content-center text-center">
-            <div class="col-1 mt-2"><p>Profile pic</p></div>
-            <div class="col-1 mt-2"><p>Name</p></div>
+            <div class="col-2 mt-2"><p>Name</p></div>  
             <div class="col-3 mt-2"><p>Title</p></div>
             <div class="col-3 mt-2"><p>Description</p></div>
-            <div class="col-1 mt-2"><p>Rating</p></div>
-            <div class="col-1 mt-2"><p>SignUp Date</p></div>
+            <div class="col-1 mt-2"><p>Language</p></div>
+            <div class="col-1 mt-2"><p>Date</p></div>
             <div class="col-1 mt-2"><p>Active</p></div>
             <div class="col-1 mt-2"><p>Deactivate</p></div>
         </div>
     </div>
     <div class="col-12">
-        <div class="row justify-content-center text-center" id="teachersList">
+        <div class="row justify-content-center text-center" id="lessonRequestList">
             
         </div>
     </div>
 </div>
 {% endblock %}
 {% block javascripts %}
-<script src="/js/adminTeachers.js"></script>
+<script src="/js/adminLessonRequests.js"></script>
 {% endblock %}

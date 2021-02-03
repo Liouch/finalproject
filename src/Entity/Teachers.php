@@ -6,12 +6,14 @@ use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 /**
  * Teachers
  * @ApiResource(attributes={"pagination_client_items_per_page"=true})
  * @ApiFilter(OrderFilter::class, properties={"signupdate": "ASC"}, arguments={"orderParameterName"="order"})
+ * @ApiFilter(SearchFilter::class, properties={"active": "exact"})
  * @ORM\Table(name="teachers", indexes={@ORM\Index(name="fk_TeacherUser_idx", columns={"idUser"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\TeachersRepository")
  */
 class Teachers
 {

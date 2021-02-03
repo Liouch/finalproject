@@ -16,7 +16,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  * @ApiFilter(OrderFilter::class, properties={"date": "ASC"}, arguments={"orderParameterName"="order"})
  * @ApiFilter(SearchFilter::class, properties={"idlanguage": "exact", "active": "exact"})
  * @ORM\Table(name="lessonRequest", indexes={@ORM\Index(name="fk_LessonUser_idx", columns={"idUser"}), @ORM\Index(name="fk_LessonLanguage_idx", columns={"idLanguage"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\LessonrequestRepository")
  */
 class Lessonrequest
 {
