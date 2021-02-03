@@ -50,7 +50,7 @@ function getTop5NewLessonRequets(objData){
 }
 
 function CallbackGetTop5NewLessonRequests(result){
-    console.log(result);
+    //console.log(result);
     printLessonRequests(result);
 }
 
@@ -70,7 +70,7 @@ function getTop5NewTeachers(objData){
     AjaxGetAll(obj)
 }
 function CallbackGetTop5NewTEachers(result){
-   console.log(result);
+   //console.log(result);
     printTeachers(result)
 
 }

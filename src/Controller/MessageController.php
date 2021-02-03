@@ -15,22 +15,29 @@ class MessageController extends AbstractController
     {
         $user = $this->getUser();
         $userMessages = $this->getDoctrine()->getRepository(Messages::class)->getAllMessagesUser($user->getId());
+        
         $numberOfMessages = count($userMessages);
+        
         for ($i=0; $i<$numberOfMessages; $i++){
             for ($j=$i+1; $j<$numberOfMessages; $j++){
-                if ($userMessages[$i]->getIdUser()->getId() == $userMessages[$j]->getIdUser()->getId()){
+                if ($userMessages[$i]->getIdUser()->getId() == $userMessages[$j]->getIdUser()->getId() && ($userMessages[$i]->getIdTeacher()->getId() == $userMessages[$j]->getIdTeacher()->getId())){
                     unset($userMessages[$i]);
                     break;
-                };
+                }elseif(  $userMessages[$i]->getIdUser()->getId() == $userMessages[$j]->getIdTeacher()->getId() && ( $userMessages[$i]->getIdTeacher()->getId() == $userMessages[$j]->getIdUser()->getId()   )){
+                    unset($userMessages[$i]);
+                    break;
+                }
             }
-        }
-        $userMessages = array_values($userMessages);
+        }   
+        
+        //var_dump($userMessages);
+        /* $userMessages = array_values($userMessages);
         $numberOfMessages = count($userMessages);
         if ($numberOfMessages >= 2){
             if ($userMessages[$numberOfMessages-2]->getIdTeacher()->getId() == $userMessages[$numberOfMessages-1]->getIdUser()->getId() && $userMessages[$numberOfMessages-2]->getIdUser()->getId() == $userMessages[$numberOfMessages-1]->getIdTeacher()->getId()){
                 unset($userMessages[$numberOfMessages-2]);
             }
-        }
+        } */
         return $this->render('message/index.html.twig', [
             'controller_name' => 'MessageController',
             'user' => $user,
