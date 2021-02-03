@@ -30,14 +30,6 @@ class MessageController extends AbstractController
             }
         }   
         
-        //var_dump($userMessages);
-        /* $userMessages = array_values($userMessages);
-        $numberOfMessages = count($userMessages);
-        if ($numberOfMessages >= 2){
-            if ($userMessages[$numberOfMessages-2]->getIdTeacher()->getId() == $userMessages[$numberOfMessages-1]->getIdUser()->getId() && $userMessages[$numberOfMessages-2]->getIdUser()->getId() == $userMessages[$numberOfMessages-1]->getIdTeacher()->getId()){
-                unset($userMessages[$numberOfMessages-2]);
-            }
-        } */
         return $this->render('message/index.html.twig', [
             'controller_name' => 'MessageController',
             'user' => $user,
