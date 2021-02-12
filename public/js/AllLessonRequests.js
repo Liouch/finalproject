@@ -6,6 +6,7 @@ $(document).ready(function(){
 function InitializeLessonRequests(){
     EventsLessonRequest();
     LoadLanguages();
+    checkNewMessages();
 
 }
 

@@ -6,6 +6,8 @@ var scrolled=false;
 function InitializeMessagesDirect(){
     LoadMessages();
     EventsMessagesDirect();
+    checkNewMessages();
+    
 }
 
 function EventsMessagesDirect(){
@@ -114,7 +116,8 @@ function printMessages(idLoggedUser, messages){
     messagesList.append(html);
     
     });
-    MessageListScroll()
+    MessageListScroll();
+    isMessagesRead();
 }
 function printSendMessage(){
     //var idLoggedUser = $("#messagesList").attr("data-idloggeduser");
@@ -144,4 +147,31 @@ function MessageListScroll(){
         //console.log(MessageDiv.scrollHeight);
     }
 }
+
+function isMessagesRead(){
+    var url = "http://finalproject.test/messages/setReadMessages";
+    const idUserConversation = $("#messagesList").data("iduser");    
+    var objData = {
+        idUserConversation: idUserConversation,
+
+    };
+    $.ajax({
+        type: "PUT",
+        url: url,
+        dataType: 'json',
+        data: objData,
+        error: function(){
+            console.log("Something went wrong");
+        }
+    })
+    .done(function(result){
+        CallbackCheckNewMessages(result);
+        setTimeout(checkNewMessages, 10000);
+    })
+    function CallbackCheckNewMessages(result){
+        console.log(result);
+        console.log("yyuo");
+    }
+}
+
     

@@ -20,17 +20,18 @@
       
       {% if is_granted ('IS_AUTHENTICATED_FULLY') %}
         {% set name = app.user.name %}
+        {% set userId = app.user.id %}
         <ul class="navbar-nav">
-        <li class="nav-item" >
+        <li class="nav-item">
             <a class="nav-link" href="{{path('AlLessonRequestOwnedByUser')}}" >My Lesson Requests</a>
         </li>
-        <li class="nav-item" >
-            <a class="nav-link" href="{{path('AllMessages')}}" >Messages</a>
+        <li class="nav-item">
+            <a class="nav-link" href="{{path('AllMessages')}}" id="header-messages">Messages</a>
         </li>
       </ul>
     
       <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-iduser="{{userId}}">
           {{ name }}
         </button>
         <div class="dropdown-menu dropdown-menu-lg-right" aria-labelledby="dropdownMenuButton" style="z-index:1000000">

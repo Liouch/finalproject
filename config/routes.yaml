@@ -46,9 +46,18 @@ GetConversationMessages:
     path: /messages/get/{id}/
     controller: App\Controller\MessageController::getMessages
 
+CheckNewMessages:
+    path: /messages/check/
+    controller: App\Controller\MessageController::checkNewMessages
+    
+SetReadMessages:
+    path: /messages/setReadMessages
+    controller: App\Controller\MessageController::setReadMessages
+
 ShowConversation:
     path: /messages/{id}
     controller: App\Controller\MessageController::showConversation
+
 
 AdminPanel:
     path: /admin/

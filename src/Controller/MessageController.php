@@ -6,12 +6,13 @@ use App\Entity\Messages;
 use App\Entity\Users;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class MessageController extends AbstractController
 {
     
-    public function showAllConversations(): Response
+    public function showAllConversations()
     {
         $user = $this->getUser();
         $userMessages = $this->getDoctrine()->getRepository(Messages::class)->getAllMessagesUser($user->getId());
@@ -72,6 +73,47 @@ class MessageController extends AbstractController
                 return "You don't have access";
             
         }
+    }
+    public function checkNewMessages(){
+        $user = $this->getUser();
+        $hasNewMessages = "";
+        if (isset($user) && !empty($user)){
+            $messages = $this->getDoctrine()->getRepository(messages::class)->checkNewMessages($user->getId());
+            if (!empty($messages)){
+                $hasNewMessages = true;
+                $hasNewMessages = $this->get('serializer')->serialize($hasNewMessages, 'json');
+                $response = new Response($hasNewMessages);
+       
+                return $response;
+
+            }else{
+                $hasNewMessages = false;
+                $hasNewMessages = $this->get('serializer')->serialize($hasNewMessages, 'json');
+                $response = new Response($hasNewMessages);
+       
+                return $response;
+            }
+        }
+    }
+    public function setReadMessages(Request $request){
+        $idUserConversation = $request->request->get('idUserConversation');
+        $user = $this->getUser();
+
+        $messages = $this->getDoctrine()->getRepository(messages::class)->getConversationUser($user->getId(), $idUserConversation);
+        var_dump($messages);
+        foreach ($messages as $message ) {
+            
+            if ($message->getIdTeacher() == $idUserConversation){
+                $message->setMessageRead("1");
+
+                $this->getDoctrine()->getRepository(messages::class)->Save($message);
+            }
+        }
+        $readMessages = "read messages";
+        $readMessages = $this->get('serializer')->serialize($readMessages, 'json');
+        $response = new Response($readMessages);
+
+        return $response;
     }
     
 }

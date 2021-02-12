@@ -5,6 +5,7 @@ $(document).ready(function(){
 function InitializeRegistration(){
     EventsLessonRequest();
     LoadLanguages();
+    checkNewMessages();
 }
 
 function EventsLessonRequest(){
@@ -23,7 +24,10 @@ function EventsLessonRequest(){
 var objLessonRequests;
 
 function LoadLanguages(){
-    var obj = { page: 1}
+    var obj = { 
+        page: 1,
+        active: 1,
+    }
     getLanguages(obj);
 }
 
@@ -119,7 +123,8 @@ function ShowNewLessonRequest(){
     
     var click = `"NewLessonRequest('${idTitle}', '${idDescription}', '${idLanguage}')"`;
     var value = "Confirm";
-    ModalWindow(body, click, value);
+    var header = "New lesson request";
+    ModalWindow(header, body, click, value);
 }
 function ShowEditLessonRequest(obj){
     var button=$(obj);
@@ -143,7 +148,8 @@ function ShowEditLessonRequest(obj){
     var click = `"EditLessonRequest('${idTitle}', '${idDescription}', '${idLanguage}', '${id}')"`;
 
     var value = "Update";
-    ModalWindow(body, click, value);
+    var header = "Edit lesson request";
+    ModalWindow(header, body, click, value);
 }
 
 function ShowDeleteLessonRequest(obj){
@@ -154,7 +160,8 @@ function ShowDeleteLessonRequest(obj){
     var click = `"DeleteLessonRequest(${id})"`;
     
     var value ="Delete";
-    ModalWindow(body,click,value);
+    var header = "Delete lesson request";
+    ModalWindow(header, body,click,value);
 }
 
 /* function ModalWindow(body, click, value){

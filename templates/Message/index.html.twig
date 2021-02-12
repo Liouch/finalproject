@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Messages!{% endblock %}
 
 {% block stylesheets %}
 <link rel="stylesheet" href="/css/messages.css">
@@ -14,16 +14,14 @@
 </div>
 <div class="row justify-content-center">
     <div class="col-10 col-md-8 col-lg-6 mb-3" id="messagesList">
-        {# <div class="card mt-2 card-message">
-            <div class="card-header">HOLA</div>
-            <div class="card-body">
-                <p class="card-text cut-text">OH YEAH OH YEAH OHEAYAOH YEAH OH YEAH OHEAYAOH YEAH OH YEAH OHEAYAOH YEAH OH YEAH OHEAYAOH YEAH OH YEAH OHEAYAOH YEAH OH YEAH OHEAYAOH YEAH OH YEAH OHEAYAOH YEAH OH YEAH OHEAYAOH YEAH OH YEAH OHEAYAOH YEAH OH YEAH OHEAYAOH YEAH OH YEAH OHEAYAOH YEAH OH YEAH OHEAYAOH YEAH OH YEAH OHEAYAOH YEAH OH YEAH OHEAYA</p>
-            </div>
-        </div> #}
-
+    
     {% if userMessages|length > 0 %}
         {% for messages in userMessages %}
             {% set idUserVar = "" %}
+            {% set messageNotRead = "" %}
+            {% if messages.messageread == 0 %}
+                {% set messageNotRead = "notRead" %}
+            {% endif %}
             {% if user.id == messages.iduser.id %}
                 {% set idUserVar = messages.idteacher.id %}
                 {% set nameConversation = messages.idteacher.name %}
@@ -34,7 +32,7 @@
             <div class="card mt-2 card-message" idLoggedUser={{user.id}} idUser={{idUserVar}}>
                 <div class="card-header">{{nameConversation}}</div>
                 <div class="card-body">
-                    <p class="card-text cut-text">{{messages.message}}</p>
+                    <p class="card-text cut-text {{messageNotRead}}">{{messages.message}}</p>
                 </div>
             </div>
 

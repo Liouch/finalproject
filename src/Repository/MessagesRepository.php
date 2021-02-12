@@ -87,4 +87,22 @@ class MessagesRepository extends ServiceEntityRepository
         $query = $qb->getQuery();
         return $query->execute();
     }
+    public function checkNewMessages($idUser, $isRead=0):array{
+        $qb = $this->createQueryBuilder('m')
+                    ->andWhere('m.iduser = :val')
+                    ->orWhere ('m.idteacher = :val')
+                    ->andWhere('m.messageread = :isRead')
+                    ->setParameter('val', $idUser)
+                    ->setParameter('isRead', $isRead)
+                    ;
+        $query = $qb->getQuery();
+        return $query->execute();
+    }
+    public function Save(Messages $messages):Messages {
+        $em = $this->getEntityManager();
+        $em->persist($messages);
+        $em->flush();
+
+        return $messages;
+    }
 }

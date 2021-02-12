@@ -37,7 +37,7 @@
         <div class="col-9 d-flex justify-content-center" id="lessonRequestpagination"></div>
     
     </div>
-    {% if user.idrole.id == "3" %}
+    {% if user and user.idrole.id == "3" %}
         <input type="hidden" value={{user.id}} id="idTeacher"></input>
     {% endif %}
         

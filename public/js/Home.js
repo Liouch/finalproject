@@ -7,6 +7,7 @@ function InitializeHome(){
     LoadTop5NewTeachers();
     LoadTop5NewLessonRequests();
     LoadLanguages();
+    checkNewMessages();
 }
 
 function EventsLessonRequest(){

@@ -30,7 +30,8 @@ function ShowSendMessageModal(obj){
         var click = `"SendMessage('${idUser}', '${idLessonRequest}', '${idTeacher}', '${message}' )"`;
 
         var value = "Send";
-        ModalWindow(body, click, value);
+        var header = "Send Message";
+        ModalWindow(header, body, click, value);
     }
 }
 function ModalWindow(header, body, click, value){
@@ -171,4 +172,33 @@ function GetNameLanguage(language){
 }
 function getDateWithoutTime(value){
     return value.split("T")[0];
+}
+
+function checkNewMessages(){
+    var userId = $("#dropdownMenuButton").data("iduser");
+    if (userId){
+        var url = "http://finalproject.test/messages/check/";
+        $.ajax({
+            type: "GET",
+            url: url,
+            dataType: 'json',
+            error: function(){
+                console.log("Something went wrong");
+            }
+        })
+        .done(function(result){
+            CallbackCheckNewMessages(result);
+            setTimeout(checkNewMessages, 10000);
+        })
+    }
+    function CallbackCheckNewMessages(result){
+        console.log(result);
+        if (result == true){
+            console.log("There are new messages");
+            $("#header-messages").addClass("newMessage");
+        }else{
+            $("#header-messages").removeClass("newMessage");
+        }
+    }
+
 }

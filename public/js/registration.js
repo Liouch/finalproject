@@ -9,7 +9,7 @@ function InitializeRegistration(){
 var objLanguages;
 
 function LoadLanguages(){
-    var obj = { page: 1}
+    var obj = { page: 1, active: 1}
     getLanguages(obj);
 }
 

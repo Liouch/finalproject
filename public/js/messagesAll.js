@@ -4,6 +4,7 @@ $(document).ready(function(){
 
 function InitializeMessages(){
     EventsMessages();
+    checkNewMessages();
 }
 
 function EventsMessages(){
