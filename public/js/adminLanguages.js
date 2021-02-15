@@ -5,6 +5,7 @@ $(document).ready(function(){
 function InitializeAdmin(){
     EventsAdmin();
     LoadLanguages();
+    checkNewMessages();
 }
 
 function EventsAdmin(){

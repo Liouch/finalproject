@@ -78,7 +78,7 @@ class MessagesRepository extends ServiceEntityRepository
         return $query->execute();
 
     } */
-    public function getAllMessagesUser($value):array{
+    /* public function getAllMessagesUser($value):array{
         $qb = $this->createQueryBuilder('m')
                     ->andWhere ('m.iduser = :val')
                     ->orWhere ('m.idteacher = :val')
@@ -86,11 +86,26 @@ class MessagesRepository extends ServiceEntityRepository
                     ;
         $query = $qb->getQuery();
         return $query->execute();
+    } */
+    public function getAllMessagesUser($value){
+        $conn = $this->getEntityManager()->getConnection();
+        $query = "SELECT m.*, u.name AS idUserName, u1.name as idTeacherName FROM messages m
+                        LEFT JOIN users u 
+                        ON m.iduser = u.id
+                        LEFT JOIN users u1
+                        ON m.idteacher =u1.id
+                    where iduser = $value or idteacher = $value
+                    ";
+        $stmt = $conn->prepare($query);
+        $stmt->execute();
+
+        return $stmt->fetchAllAssociative();
     }
+
+
     public function checkNewMessages($idUser, $isRead=0):array{
         $qb = $this->createQueryBuilder('m')
                     ->andWhere('m.iduser = :val')
-                    ->orWhere ('m.idteacher = :val')
                     ->andWhere('m.messageread = :isRead')
                     ->setParameter('val', $idUser)
                     ->setParameter('isRead', $isRead)

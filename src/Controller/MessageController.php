@@ -12,9 +12,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class MessageController extends AbstractController
 {
     
-    public function showAllConversations()
+    public function AllConversations()
     {
-        $user = $this->getUser();
+        /* $user = $this->getUser();
         $userMessages = $this->getDoctrine()->getRepository(Messages::class)->getAllMessagesUser($user->getId());
         
         $numberOfMessages = count($userMessages);
@@ -29,15 +29,41 @@ class MessageController extends AbstractController
                     break;
                 }
             }
-        }   
+        }    */
         
         return $this->render('message/index.html.twig', [
-            'controller_name' => 'MessageController',
-            'user' => $user,
-            'userMessages' => $userMessages,
-            'numberofmessages' => $numberOfMessages,
+            /* 'user' => $user,
+            'userMessages' => $userMessages, */
             
         ]);
+    }
+    public function ShowAllConversations()
+    {
+        $user = $this->getUser();
+        $userMessages = $this->getDoctrine()->getRepository(Messages::class)->getAllMessagesUser($user->getId());
+        
+        $numberOfMessages = count($userMessages);
+        
+        for ($i=0; $i<$numberOfMessages; $i++){
+            for ($j=$i+1; $j<$numberOfMessages; $j++){
+                if ($userMessages[$i]["idUser"] == $userMessages[$j]["idUser"] && ($userMessages[$i]["idTeacher"] == $userMessages[$j]["idTeacher"])){
+                    unset($userMessages[$i]);
+                    break;
+                }elseif(  $userMessages[$i]["idUser"] == $userMessages[$j]["idTeacher"] && ( $userMessages[$i]["idTeacher"] == $userMessages[$j]["idUser"]   )){
+                    unset($userMessages[$i]);
+                    break;
+                }
+            }
+        }
+        
+        $userMessages = array_values($userMessages);
+        
+        $userMessagesList = $this->get('serializer')->serialize($userMessages, 'json');
+        $response = new Response($userMessagesList);
+       
+        return $response;
+ 
+       
     }
     public function showConversation($id){
         $user = $this->getUser();
@@ -76,23 +102,16 @@ class MessageController extends AbstractController
     }
     public function checkNewMessages(){
         $user = $this->getUser();
-        $hasNewMessages = "";
+        $hasNewMessages = false;
         if (isset($user) && !empty($user)){
             $messages = $this->getDoctrine()->getRepository(messages::class)->checkNewMessages($user->getId());
             if (!empty($messages)){
                 $hasNewMessages = true;
-                $hasNewMessages = $this->get('serializer')->serialize($hasNewMessages, 'json');
-                $response = new Response($hasNewMessages);
-       
-                return $response;
-
-            }else{
-                $hasNewMessages = false;
-                $hasNewMessages = $this->get('serializer')->serialize($hasNewMessages, 'json');
-                $response = new Response($hasNewMessages);
-       
-                return $response;
             }
+            $hasNewMessages = $this->get('serializer')->serialize($hasNewMessages, 'json');
+            $response = new Response($hasNewMessages);
+   
+            return $response;
         }
     }
     public function setReadMessages(Request $request){
@@ -100,13 +119,14 @@ class MessageController extends AbstractController
         $user = $this->getUser();
 
         $messages = $this->getDoctrine()->getRepository(messages::class)->getConversationUser($user->getId(), $idUserConversation);
-        var_dump($messages);
+        
         foreach ($messages as $message ) {
             
-            if ($message->getIdTeacher() == $idUserConversation){
-                $message->setMessageRead("1");
+            if ($message["idTeacher"] == $idUserConversation){
+                $messageRead = $this->getDoctrine()->getRepository(Messages::class)->find($message["id"]);
+                $messageRead->setMessageRead("1");
 
-                $this->getDoctrine()->getRepository(messages::class)->Save($message);
+                $this->getDoctrine()->getRepository(messages::class)->Save($messageRead);
             }
         }
         $readMessages = "read messages";

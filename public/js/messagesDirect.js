@@ -166,11 +166,9 @@ function isMessagesRead(){
     })
     .done(function(result){
         CallbackCheckNewMessages(result);
-        setTimeout(checkNewMessages, 10000);
     })
     function CallbackCheckNewMessages(result){
-        console.log(result);
-        console.log("yyuo");
+        checkNewMessages();
     }
 }
 

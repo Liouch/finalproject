@@ -69,7 +69,7 @@ a.text-color-black {
     content: '';
     display: inline-block;
     position: absolute;
-    top:2vh;
+    top:20px;
     width: 10px;
     height: 10px;
     border-radius: 50%;
@@ -80,7 +80,7 @@ a.text-color-black {
     display: inline-block;
     position: absolute;
     right: 1vw;
-    top: 8vh;
+    top: 75px;
     width: 10px;
     height: 10px;
     border-radius: 50%;
