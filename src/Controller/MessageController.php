@@ -14,10 +14,10 @@ class MessageController extends AbstractController
     
     public function AllConversations()
     {
-        /* $user = $this->getUser();
+        $user = $this->getUser();
         $userMessages = $this->getDoctrine()->getRepository(Messages::class)->getAllMessagesUser($user->getId());
         
-        $numberOfMessages = count($userMessages);
+        /* $numberOfMessages = count($userMessages);
         
         for ($i=0; $i<$numberOfMessages; $i++){
             for ($j=$i+1; $j<$numberOfMessages; $j++){

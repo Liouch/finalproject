@@ -3,8 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Messages;
+use App\Entity\Users;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Mime\Message;
 
 /**
  * @method Messages|null find($id, $lockMode = null, $lockVersion = null)
@@ -99,7 +101,7 @@ class MessagesRepository extends ServiceEntityRepository
         $stmt = $conn->prepare($query);
         $stmt->execute();
 
-        return $stmt->fetchAllAssociative();
+        return $stmt->fetchAllAssociative();       
     }
 
 

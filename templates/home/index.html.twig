@@ -3,21 +3,43 @@
 {% block title %}Linwah!{% endblock %}
 
 {% block body %}
-<div class="row justify-content-center pt-3">
-    <div class="col-6 justify-content-center">
-        <h2>New teachers</h2>
+<div class="row justify-content-center mt-5">
+    <div class="col-10 col-sm-10 col-md-8 col-xl-6 justify-content-center text-center">
+        <h2>How Linwah works?</h2>
+        <p>In <strong>Linwah</strong> everything is easier</p>
+        <p>If you are a teacher you can manage your lessons and complete your free time with new pupils. If you are a student, you can find quickly the language teacher closest to you. It is very easy!</p>
+        <p>if you are still not a <strong>Linwah</strong> member, sign up in our community.</p>
+        {% if not app.user %}
+        <div class="row">
+            <div class="col-12 col-sm-6 mb-2 mb-sm-0">
+                <a href="http://finalproject.test/register/teacher" class="btn btn-primary col-12" role="button">I'm a teacher</a>
+            </div>
+            <div class="col-12 col-sm-6">
+                <a href="http://finalproject.test/register/user" class="btn btn-secondary col-12" role="button">I'm a student</a>
+            </div>
+        </div>
+        {% else %}
+
+                <a href="http://finalproject.test/register/teacher" class="btn btn-primary" role="button">Become a teacher</a>
+          
+        {% endif %}
+    </div>
+</div>
+<div class="row justify-content-center mt-5">
+    <div class="col-10 col-sm-10 col-md-8 col-xl-6 justify-content-center">
+        <h4>New teachers</h4>
     </div>
 </div>
 <div class="row justify-content-center">
-    <div class="col-10 col-sm-9 col-md-8 col-xl-6" id="top5NewTeachersList"></div>
+    <div class="col-10 col-sm-10 col-md-8 col-xl-6" id="top5NewTeachersList"></div>
 </div>
 <div class="row justify-content-center mt-lg-5">
-    <div class="col-6 justify-content-center">
-        <h2>New Lesson Requests</h2>
+    <div class="col-10 col-sm-10 col-md-8 col-xl-6 justify-content-center">
+        <h4>New Lesson Requests</h4>
     </div>
 </div>
 <div class="row justify-content-center">
-    <div class="col-10 col-sm-9 col-md-8 col-xl-6" id="top5NewLessonRequestList"></div>
+    <div class="col-10 col-sm-10 col-md-8 col-xl-6" id="top5NewLessonRequestList"></div>
 </div>
 {% if (user) and (user.idrole.id == "3") %}
     <input type="hidden" value={{user.id}} id="idTeacher"></input>
