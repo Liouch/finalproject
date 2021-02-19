@@ -38,16 +38,17 @@ function LoadLanguages(){
 
 }
 
-function getLanguages(objData){
+/* function getLanguages(objData){
     var obj = {
         url: "http://localhost:8000/api/languages",
         data: objData,
         functionName: CallbackLanguages
     }
     AjaxGetAll(obj)
-}
+} */
 function CallbackLanguages(result){
     objLanguages = result;
+    setTimeout(LoadLanguages, 10000);
     languagesFilter();
     LoadLessonRequests();
 }
@@ -118,7 +119,7 @@ function ClickPaginator(obj){
 
 }
 
-function CallbackSaveLessonRequest(result){
+function CallbackMessageSent(result){
     //HideDivBlock();
     alert("Message sent");
     LoadLessonRequests();

@@ -4,15 +4,18 @@ $(document).ready(function(){
 
 function InitializeRegistration(){
     EventsLessonRequest();
-    LoadLanguages();
+    LoadAllLanguages();
+    
     checkNewMessages();
 }
 
 function EventsLessonRequest(){
     $("#btn-nuevo-lesson-request").on("click", function(){
+        LoadActiveLanguages();
         ShowNewLessonRequest();
     })
     $("#lessonRequestList").on("click", "button[class*='btn-edit']", function(){
+        LoadActiveLanguages();
         ShowEditLessonRequest(this);
     })
     $("#lessonRequestList").on("click", "button[class*='btn-delete']", function(){
@@ -20,29 +23,42 @@ function EventsLessonRequest(){
     })
    
 }
-
-var objLessonRequests;
-
-function LoadLanguages(){
+var objActiveLanguages;
+var languageToEdit;
+function LoadAllLanguages(){
+    var obj = { 
+        page: 1,
+        active: [1, 0],
+    }
+   getLanguages(obj);
+}
+function LoadActiveLanguages(){
     var obj = { 
         page: 1,
         active: 1,
     }
-    getLanguages(obj);
+   getActiveLanguages(obj);
 }
 
-function getLanguages(objData){
+function getActiveLanguages(objData){
     var obj = {
         url: "http://localhost:8000/api/languages",
         data: objData,
-        functionName: CallbackLanguages
+        functionName: CallbackActiveLanguages
     }
     AjaxGetAll(obj)
 }
+function CallbackActiveLanguages(result){
+    objActiveLanguages = result;
+    printActiveLanguages(languageToEdit);
+    languageToEdit = null;
+    
+    
+}
 function CallbackLanguages(result){
     objLanguages = result;
-    LoadLessonRequests()
-    //console.log(objLanguages);
+    LoadLessonRequests();
+    
 }
 function LoadLessonRequests(){
     GetLessonRequests()
@@ -66,8 +82,7 @@ function GetLessonRequests(){
 }
 function CallbackLessonRequests(result){
     printLessonRequests(result);
-    //HideDivBloc()
-    //console.log(result);
+
 }
 
 function printLessonRequests(lessonRequestsObj){
@@ -117,7 +132,8 @@ function ShowNewLessonRequest(){
             <label>Description</label>
             <textarea class="form-control mb-2 row="3" maxlength="500" id="${idDescription}" required></textarea>
             <label>Language</label>
-           ${CreateLanguageCombo(idLanguage)}
+            <select class="form-control" id="${idLanguage}" required>
+            </select>
            `;
            
     
@@ -125,31 +141,44 @@ function ShowNewLessonRequest(){
     var value = "Confirm";
     var header = "New lesson request";
     ModalWindow(header, body, click, value);
+    
+    
 }
 function ShowEditLessonRequest(obj){
     var button=$(obj);
     var id = button.attr('id');
     var idLang = button.attr('idLanguage');
-
+    
     var title = $("#title_" + id).html();
     var description = $("#description_" + id).html();
     
     var idTitle = "txtLessonRequestTitle";
     var idDescription = "txtLessonRequestDescription";
     var idLanguage = "cbLanguage";
-    var body = 
+    /* var body = 
             `<label>Title</label>
             <input type="text" class="form-control mb-2" id="${idTitle}" value="${title}" required></input>
             <label>Description</label>
             <textarea class="form-control mb-2" id="${idDescription}" row="3" maxlength="500" required>${description}</textarea>
             <label>Language</label>
            ${CreateLanguageCombo(idLanguage, idLang)}
+           `; */
+    var body = 
+            `<label>Title</label>
+            <input type="text" class="form-control mb-2" id="${idTitle}" value="${title}" required></input>
+            <label>Description</label>
+            <textarea class="form-control mb-2" id="${idDescription}" row="3" maxlength="500" required>${description}</textarea>
+            <label>Language</label>
+            <select class="form-control" id="${idLanguage}" required>
+            </select>
            `;
     var click = `"EditLessonRequest('${idTitle}', '${idDescription}', '${idLanguage}', '${id}')"`;
 
     var value = "Update";
     var header = "Edit lesson request";
     ModalWindow(header, body, click, value);
+    languageToEdit = idLang;
+    
 }
 
 function ShowDeleteLessonRequest(obj){
@@ -164,56 +193,20 @@ function ShowDeleteLessonRequest(obj){
     ModalWindow(header, body,click,value);
 }
 
-/* function ModalWindow(body, click, value){
-    var id = 'btnDeactivateLessonRequest';
-    
-    $(`#${id}`).remove(); //Show alert to confirm and make call to ajax
-    var html = `<div class="modal fade" id="${id}" tabindex="-1" role="dialog" aria-hidden="true" style="z-index:9999">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">New lesson request</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                            
-                                ${body}                            
-                            </div>
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-danger" id="btnBorrar" onclick=${click} data-dismiss="modal"
-                                >${value}</button>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                
-                            </div>
-                            
-                        </div>
-                    </div>
-                </div>`
-    $('body').append(html);
-    $(`#${id}`).modal('show');
-} */
-
 function NewLessonRequest(idTitle, idDescription, idLanguage){
     var title = $("#"+idTitle).val();
     var description = $("#"+idDescription).val();
     var language = $("#"+idLanguage).val();
-    var User = $("#idUser").val();
-    var html = "Creating lesson request";
-
-    //ShowDivBlock(html)
 
     var objItem = {
         title: title,
         description: description,
-        idlanguage: "/api/languages/"+language,
-        iduser: "/api/users/" + User,
-        date: ActualDateISO()
+        idlanguage: language,
+        
     }
 
     var obj = {
-        url: "http://finalproject.test/api/lessonrequests",
+        url: "http://finalproject.test/lessonrequests/new",
         data: objItem,
         functionName: CallbackSaveLessonRequest
     }
@@ -223,7 +216,8 @@ function NewLessonRequest(idTitle, idDescription, idLanguage){
 }
 function CallbackSaveLessonRequest(result){
     //HideDivBlock();
-    alert("Lesson request sent");
+    console.log(result);
+    alert(result);
     LoadLessonRequests();
 }
 
@@ -235,14 +229,15 @@ function EditLessonRequest(idTitle, idDescription, idLanguage, id){
     var objItem = {
         title: title,
         description: description,
-        idlanguage: "api/languages/"+language,
+        idlanguage: language,
+        idlesson: id
     }
     var obj = {
-        url: "http://localhost:8000/api/lessonrequests",
+        url: "http://finalproject.test/lessonrequests/edit",
         data: objItem,
         functionName: CallbackEditLessonRequest,
     }
-    AjaxPutItem(id, obj);
+    AjaxPutItem(obj);
 }
 
 function CallbackEditLessonRequest(result){
@@ -258,7 +253,7 @@ function DeleteLessonRequest(id){
         data: {active: 0},
         functionName: CallbackDeleteLessonRequest,
     }
-    AjaxPutItem(id, obj);
+    AjaxPutItemApi(id, obj);
 
 }
 
@@ -269,16 +264,19 @@ function CallbackDeleteLessonRequest(result){
     
 }
 
-function CreateLanguageCombo(idLanguage, idLang=null){
-    var returnValue = `<select class="form-control" id="${idLanguage}" required>`;
-    returnValue = returnValue + `<option style="display:none">Select a language</option>`;
-    $(objLanguages).each(function(index){
-        var selected = "";
-        if (this.id==idLang) selected ="selected";
-        returnValue = returnValue + `<option value="${this.id}" ${selected}>${this.language}</option>`
-    });
-    returnValue = returnValue + "</select>";
-
-    return returnValue;
+function printActiveLanguages(idLang=null){
+    var idLanguage= "cbLanguage";
+    select = $("#"+idLanguage);
+    if (objActiveLanguages){
+        select.html("");
+        var returnValue = `<option style="display:none">Select a language</option>`;
+        $(objActiveLanguages).each(function(index){
+            var selected = "";
+            if (this.id==idLang) selected ="selected";
+            returnValue = returnValue + `<option value="${this.id}" ${selected}>${this.language}</option>`;
+        });
+        select.html(returnValue); 
+        objActiveLanguages = "";
+    }
 
 }

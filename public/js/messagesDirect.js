@@ -52,8 +52,8 @@ function SendMessageDirect(obj){
         data: objItem,
         functionName: CallbackSaveMessage
     }
-    console.log(objItem);
-    AjaxPost(obj);
+    /* console.log(objItem); */
+    AjaxPostApi(obj);
 
 }
 function CallbackSaveMessage(result){
@@ -73,7 +73,7 @@ function GetMessages(){
     const idUserConversation = $("#messagesList").data("iduser");    
 
     var url = "http://finalproject.test/messages/get/"+idUserConversation;
-    console.log(url);
+    /* console.log(url); */
     $.ajax({
         method: "GET",
         url: url,
@@ -97,7 +97,7 @@ function CallbackGetMessages(idLoggedUser, result){
 function printMessages(idLoggedUser, messages){
     var messagesList = $('#messagesList');
     messagesList.html('');
-    console.log(messages);
+    /* console.log(messages); */
     $(messages).each(function(index){
         if (this.idTeacher == idLoggedUser){
             var align = "row justify-content-end";

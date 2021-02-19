@@ -18,14 +18,26 @@ function AjaxGetAll(obj, json= "json"){
     });
 }
 
-function AjaxPost(obj, json="json"){
+function AjaxPostApi(obj){
     var url = obj.url;
     $.ajax({
         method: "POST",
         url: url,
         contentType: "application/json",
-        dataType: json,
+        dataType: "json",
         data: JSON.stringify(obj.data)
+    })
+    .done(function(result){
+        obj.functionName(result);
+    });
+}
+function AjaxPost(obj){
+    var url = obj.url;
+    $.ajax({
+        method: "POST",
+        url: url,
+        dataType: "json",
+        data: obj.data
     })
     .done(function(result){
         obj.functionName(result);
@@ -55,7 +67,7 @@ function AjaxDeleteItem(obj, json= "json"){
         obj.functionName(result);
     });
 }
-function AjaxPutItem(id, obj, json = "json"){
+function AjaxPutItemApi(id, obj, json = "json"){
     var url = obj.url + "/" + id;
     $.ajax({
         method: "PUT",
@@ -63,6 +75,18 @@ function AjaxPutItem(id, obj, json = "json"){
         contentType: "application/json",
         dataType: json,
         data: JSON.stringify(obj.data)
+    })
+    .done(function(result){
+        obj.functionName(result);
+    });
+}
+function AjaxPutItem(obj){
+    var url = obj.url;
+    $.ajax({
+        method: "PUT",
+        url: url,
+        dataType: "json",
+        data: obj.data
     })
     .done(function(result){
         obj.functionName(result);

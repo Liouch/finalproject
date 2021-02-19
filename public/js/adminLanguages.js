@@ -134,7 +134,7 @@ function CallbackNewLanguage(result){
 function LoadLanguages(){
     var url = "http://finalproject.test/admin/languages/get/";
     $.ajax({
-        method: "POST",
+        method: "GET",
         url: url,
         dataType: 'json',
         error: function(){

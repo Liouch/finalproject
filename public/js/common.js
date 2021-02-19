@@ -4,6 +4,15 @@ function ActualDateISO(){
     return d.toISOString();
 }
 
+function getLanguages(objData){
+    var obj = {
+        url: "http://localhost:8000/api/languages",
+        data: objData,
+        functionName: CallbackLanguages
+    }
+    AjaxGetAll(obj)
+}
+
 function ShowSendMessageModal(obj){
     var button=$(obj);
     var idUser = button.attr('idUser');
@@ -82,10 +91,10 @@ function SendMessage(idUser, idLessonRequest, idTeacher, message){
     var obj = {
         url: "http://finalproject.test/api/messages",
         data: objItem,
-        functionName: CallbackSaveLessonRequest
+        functionName: CallbackMessageSent
     }
     console.log(objItem);
-    AjaxPost(obj);
+    AjaxPostApi(obj);
 
 }
 
@@ -192,9 +201,9 @@ function checkNewMessages(){
         })
     }
     function CallbackCheckNewMessages(result){
-        console.log(result);
+        /* console.log(result); */
         if (result == true){
-            console.log("There are new messages");
+            /* console.log("There are new messages"); */
             $("#header-messages").addClass("newMessage");
         }else{
             $("#header-messages").removeClass("newMessage");
