@@ -96,13 +96,14 @@ function printLessonRequests(lessonRequestsObj){
         $(lessonRequests).each(function(index){
             var nameLanguage = GetNameLanguage(this.idlanguage);
             var idLanguage = GetIdApi(this.idlanguage);
+            var date = getDate(this.date);
             var html = `
             <div class="card mb-4" id="card-lesson">
                 <div class="card-header">
                     <div class="row">
                         <div class="col-12 col-sm-4 text-left" id="title_${this.id}">${this.title}</div>
                         <div class="col-12 col-sm-4 text-left text-sm-center" id="language_${this.id}">${nameLanguage}</div>
-                        <div class="col-12 col-sm-4 text-left text-sm-right" id="date_${this.id}">${this.date}</div>
+                        <div class="col-12 col-sm-4 text-left text-sm-right" id="date_${this.id}">${date}</div>
                     </div>
                 </div>
                 <div class="card-body">

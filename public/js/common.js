@@ -179,6 +179,10 @@ function GetNameLanguage(language){
     });
     return returnValue;
 }
+function getDate(date){
+    if(date) date = date.split("T")[0];
+    return date
+}
 function getDateWithoutTime(value){
     return value.split("T")[0];
 }
