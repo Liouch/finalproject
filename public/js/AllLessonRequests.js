@@ -38,17 +38,8 @@ function LoadLanguages(){
 
 }
 
-/* function getLanguages(objData){
-    var obj = {
-        url: "http://localhost:8000/api/languages",
-        data: objData,
-        functionName: CallbackLanguages
-    }
-    AjaxGetAll(obj)
-} */
 function CallbackLanguages(result){
     objLanguages = result;
-    setTimeout(LoadLanguages, 10000);
     languagesFilter();
     LoadLessonRequests();
 }
@@ -63,15 +54,13 @@ function LoadLessonRequests(filter="", currentPage = 1){
         },
         functionName: CallbackGetAllLessons
     }
-    //console.log(obj.url);
     AjaxGetAll(obj, null)
 }
 
 function CallbackGetAllLessons(result){
     objLessonRequests = result;
-    //console.log(objLessonRequests);
+    printLessonRequests(objLessonRequests);
     
-    printLessonRequests(objLessonRequests)
     
 }
 
@@ -110,12 +99,13 @@ function printLessonRequests(lessonRequestsObj){
         });
     }
     createPaginator(lessonRequestsObj["hydra:view"], "#lessonRequestpagination");
+    window.scrollTo(0,0);
 }   
 
 function ClickPaginator(obj){
     var objPage = $(obj).attr("page");
-    console.log(objPage);
     LoadLessonRequests(filter, objPage);
+    
 
 }
 
@@ -155,11 +145,9 @@ function applyFilters(obj){
         idlanguage: languages,
       });
       params.toString();
-    console.log(params.toString());
     var ApiParams = params.toString().replace("date", "[date]");
     filter = "&order";
     filter += ApiParams;
-    console.log(filter);
     return filter;
     
     

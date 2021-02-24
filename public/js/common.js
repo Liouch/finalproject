@@ -62,7 +62,7 @@ function ModalWindow(header, body, click, value){
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary" id="btnSend" onclick=${click} data-dismiss="modal"
                                 >${value}</button>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             </div>
                         </div>
                     </div>
@@ -205,13 +205,17 @@ function checkNewMessages(){
         })
     }
     function CallbackCheckNewMessages(result){
-        /* console.log(result); */
         if (result == true){
-            /* console.log("There are new messages"); */
-            $("#header-messages").addClass("newMessage");
+            $("#hamburger").addClass("new-message-badge"); 
+            $("#header-messages").addClass("new-message");
+            $("#header-messages").addClass("new-message-badge");
+            
         }else{
-            $("#header-messages").removeClass("newMessage");
+            $("#hamburger").removeClass("new-message-badge");
+            $("#header-messages").removeClass("new-message");
+            $("#header-messages").removeClass("new-message-badge");
         }
+        
     }
 
 }

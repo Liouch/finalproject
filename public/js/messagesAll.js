@@ -35,7 +35,6 @@ function GetAllMessages(){
         setTimeout(GetAllMessages, 10000);
     })
     function CallbackGetAllMessages(result){
-        console.log(result);
         printAllMessages(result);
     }
 }
@@ -48,7 +47,7 @@ function printAllMessages(messages){
             var idUserVar = "";
             var messageNotRead = "";
             if (message.MessageRead == 0 && userId == parseInt(message.idUser)){
-                var messageNotRead = "notRead";
+                var messageNotRead = "not-read new-message-badge";
             }
             if (userId == message.idUser){
                 var idUserVar = message.idTeacher;

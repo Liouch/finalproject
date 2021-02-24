@@ -16,7 +16,7 @@ function ModalWindow(header, body, click, value){
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary" id="btnSend" onclick=${click} data-dismiss="modal"
                                 >${value}</button>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             </div>
                         </div>
                     </div>

@@ -217,7 +217,7 @@ function NewLessonRequest(idTitle, idDescription, idLanguage){
 }
 function CallbackSaveLessonRequest(result){
     //HideDivBlock();
-    console.log(result);
+    /* console.log(result); */
     alert(result);
     LoadLessonRequests();
 }
@@ -242,7 +242,7 @@ function EditLessonRequest(idTitle, idDescription, idLanguage, id){
 }
 
 function CallbackEditLessonRequest(result){
-    alert("Lesson request edited");
+    alert(result);;
     LoadLessonRequests();
     
 }
@@ -261,7 +261,7 @@ function DeleteLessonRequest(id){
 function CallbackDeleteLessonRequest(result){
     var id = result.id;
     $("#"+id).closest("div[id*='card-lesson']").remove();
-    console.log(result.id);
+    /* console.log(result.id); */
     
 }
 

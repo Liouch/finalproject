@@ -4,15 +4,14 @@
 {% block header %}
 <nav class="navbar navbar-expand-lg navbar-light bg-light header header-fix">
   <a class="navbar-brand" href="{{ path('index') }}"><img src="/img/logo/Linwah.png" height="45"/></a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler" type="button" id="hamburger" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+  <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
     
       <ul class="navbar-nav mr-auto">
-        
-        <li class="nav-item">
+        <li class="nav-item text-right">
           <a class="nav-link" href="{{path('AlLessonRequest')}}">All Lesson Requests</a>
         </li>
         
@@ -22,19 +21,19 @@
         {% set name = app.user.name %}
         {% set userId = app.user.id %}
         <ul class="navbar-nav">
-        <li class="nav-item">
+        <li class="nav-item text-right">
             <a class="nav-link" href="{{path('AlLessonRequestOwnedByUser')}}" >My Lesson Requests</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item text-right">
             <a class="nav-link" href="{{path('AllMessages')}}" id="header-messages">Messages</a>
         </li>
       </ul>
     
-      <div class="dropdown">
+      <div class="dropdown text-right">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-iduser="{{userId}}">
           {{ name }}
         </button>
-        <div class="dropdown-menu dropdown-menu-lg-right" aria-labelledby="dropdownMenuButton" style="z-index:1000000">
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton" style="z-index:1000000">
         {% set userRole = app.user.idrole.id %}
         {% if userRole == 1 %}
             <a class="dropdown-item" href="{{ path('profileUser')}}">Profile</a>
@@ -53,8 +52,8 @@
       </div>
       {% else %}
       <ul class="navbar-nav">
-        <li class="nav-item"><a class="nav-link" href="{{ path('signUpUser')}}">Sign up</a></li>
-        <li class="nav-item active"><a class="nav-link" href="/login">Login</a></li>
+        <li class="nav-item text-right"><a class="nav-link" href="{{ path('signUpUser')}}">Sign up</a></li>
+        <li class="nav-item active text-right"><a class="nav-link" href="/login">Login</a></li>
       </ul>
       {% endif %}
   </div>

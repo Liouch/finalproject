@@ -39,7 +39,7 @@ function SendMessageDirect(obj){
     var message = formData.get('message');
    
     var html = "Sending message";
-    //ShowDivBlock(html)
+    
     var objItem = {
         message: message,
         messagedate: ActualDateISO(),
@@ -52,12 +52,12 @@ function SendMessageDirect(obj){
         data: objItem,
         functionName: CallbackSaveMessage
     }
-    /* console.log(objItem); */
+    
     AjaxPostApi(obj);
 
 }
 function CallbackSaveMessage(result){
-    //HideDivBlock();    
+     
     GetMessages();
     $("#messageTextArea").val(''); 
     
@@ -73,7 +73,6 @@ function GetMessages(){
     const idUserConversation = $("#messagesList").data("iduser");    
 
     var url = "http://finalproject.test/messages/get/"+idUserConversation;
-    /* console.log(url); */
     $.ajax({
         method: "GET",
         url: url,
@@ -91,13 +90,12 @@ function GetMessages(){
 }
 function CallbackGetMessages(idLoggedUser, result){
     printMessages(idLoggedUser, result);
-    //HideDivBloc()
+    
 }
 
 function printMessages(idLoggedUser, messages){
     var messagesList = $('#messagesList');
     messagesList.html('');
-    /* console.log(messages); */
     $(messages).each(function(index){
         if (this.idTeacher == idLoggedUser){
             var align = "row justify-content-end";
@@ -120,8 +118,6 @@ function printMessages(idLoggedUser, messages){
     isMessagesRead();
 }
 function printSendMessage(){
-    //var idLoggedUser = $("#messagesList").attr("data-idloggeduser");
-    //var conversationIdUser = $("#messagesList").attr("data-iduser");
     var SendMessage = $("#SendMessage");
     var html = `
     <form id="messageTextForm">
@@ -144,7 +140,7 @@ function MessageListScroll(){
     if (!scrolled){
         var MessageDiv = document.getElementById('messagesList');
         MessageDiv.scrollTop = MessageDiv.scrollHeight;
-        //console.log(MessageDiv.scrollHeight);
+        
     }
 }
 

@@ -21,17 +21,9 @@ function LoadLanguages(){
     getLanguages(obj);
 }
 
-/* function getLanguages(objData){
-    var obj = {
-        url: "http://localhost:8000/api/languages",
-        data: objData,
-        functionName: CallbackLanguages
-    }
-    AjaxGetAll(obj)
-} */
 function CallbackLanguages(result){
     objLanguages = result;
-    setTimeout(LoadLanguages, 10000);
+    //setTimeout(LoadLanguages, 10000);
     
 }
 function LoadTop5NewLessonRequests(){
@@ -95,9 +87,9 @@ function printLessonRequests(LessonRequests){
                 <div class="card mb-4">
                     <div class="card-header">
                         <div class="row">
-                            <div class="col-12 col-sm-4 text-left" id="title_${this.id}">${this.title}</div>
-                            <div class="col-12 col-sm-4 text-left text-sm-center" id="language_${this.id}">${nameLanguage}</div>
-                            <div class="col-12 col-sm-4 text-left text-sm-right" id="language_${this.id}">${date}</div>
+                            <div class="col-12 col-sm-4 text-center text-sm-left" id="title_${this.id}">${this.title}</div>
+                            <div class="col-12 col-sm-4 text-center" id="language_${this.id}">${nameLanguage}</div>
+                            <div class="col-12 col-sm-4 text-center text-sm-right" id="language_${this.id}">${date}</div>
                         </div>
                     </div>
                     <div class="card-body px-5">
@@ -134,7 +126,7 @@ function printTeachers(teachers){
             <div class="carousel-item ${active}">
                 <div class="card">
                     <div class="row align-items-center px-0 px-sm-3">
-                        <div class="col-12 col-sm-4 col-md-3 p-2">
+                        <div class="col-12 col-sm-4 col-md-3 col-lg-12 col-xl-3 p-2">
                             <div class="rounded-circle custom-circle-image-home mx-auto">
                                 <img src="${profilePicUrl}" class="w-100 h-100" alt="${profilePicUrl}">
                             </div>
