@@ -164,10 +164,10 @@ function printLanguages(languages){
             var activeYesNo = "No";
         }
         var html = `
-        <div class="col-4 mt-2" id="language_${this.id}">${this.language}</div>
-        <div class="col-4 mt-2"><p>${activeYesNo}</p></div>
-        <div class="col-2 mt-2"><button type="button" class="btn btn-primary btn-edit" editId="${this.id}">Edit</button></div>
-        <div class="col-2 mt-2"><button type="button" class="btn ${buttonClass} ${buttonActive} w-100" deactivateId="${this.id}">${buttonName}</button></div>
+        <div class="col-4 col-lg-4 mt-2" id="language_${this.id}">${this.language}</div>
+        <div class="col-2 col-lg-4 mt-2"><p>${activeYesNo}</p></div>
+        <div class="col-2 col-lg-2 col-xl-1 mt-2"><button type="button" class="btn btn-primary btn-edit" editId="${this.id}">Edit</button></div>
+        <div class="col-4 col-lg-2 col-xl-2 mt-2"><button type="button" class="btn ${buttonClass} ${buttonActive} w-100" deactivateId="${this.id}">${buttonName}</button></div>
         `;
     languagesList.append(html); 
     })

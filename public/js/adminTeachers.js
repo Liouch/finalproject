@@ -65,7 +65,6 @@ function LoadTeachers(){
     })
 }
 function CallbackLoadTeachers(result){
-    console.log(result);
     printTeachers(result);
 }
 function printTeachers(teachers){
